@@ -15,6 +15,48 @@
     <div class="app-content content container-fluid">
         <div class="content-wrapper">
             <div class="content-body">
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin nhân viên</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="recipient-name" class="col-form-label">Tên:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Họ tên" id="name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="message-text" class="col-form-label">Số điện thoại:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Số điện thoại"
+                                                    id="phoneNumber">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                <button type="button" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row">
                     <div class="col-xs-12">
@@ -24,7 +66,8 @@
                                     <form class="form form-horizontal" action="employees' />" method='GET'>
 
                                         <div class="col-md-2">
-                                            <select class="form-control input-sm" id="status" name="status" name="status">
+                                            <select class="form-control input-sm" id="status" name="status"
+                                                name="status">
                                                 <option value="-1">Chọn trạng thái</option>
                                                 <option value="1">Đang hoạt động</option>
                                                 <option value="0">Đã ngưng</option>
@@ -43,44 +86,65 @@
                                         </div>
                                     </form>
                                     <div class="col-md-2">
-                                        <button title="Tạo mới" type="button" onclick="location.href='employees/create'" class="btn btn-sm btn-outline-primary mr-1">
-                                            <i class="ft-plus-circle"></i>
-                                        </button>
+                                        <button data-toggle="modal" data-target="#exampleModal"
+                                            data-original-title="Sửa thông tin" type="button"
+                                            class="btn btn-icon btn-primary btn-sm show-tooltip"><i
+                                                class="ft-plus-circle"></i></button>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="card-body collapse in">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered mb-0">
+                                        <table id="table" class="table table-bordered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th>Id</th>
-                                                    <th>Tài khoản</th>
                                                     <th>Tên</th>
+                                                    <th>Tài khoản</th>
+                                                    <th>Số điện thoại</th>
                                                     <th>Chức vụ</th>
                                                     <th>Nơi sinh</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Chức năng</th>
+                                                    <th>Xóa</th>
+                                                    <th>Sửa</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <% for(var i=0; i< employees.length; i++){ %>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>NV001</td>
-                                                    <td>Ngô Trần Nguyễn</td>
-                                                    <td>Tư vấn</td>
-                                                    <td>Đồng Nai</td>
-                                                    <td>
+                                                    <td><%= employees[i].id %></td>
+                                                    <td><%= employees[i].name %></td>
+                                                    <td><%= employees[i].account %></td>
+                                                    <td><%= employees[i].phoneNumber %></td>
+                                                    <td><%= employees[i].roleName %></td>
+                                                    <td><%= employees[i].place %></td>
+                                                    <td><% if(employees[i].status == "1"){ %>
                                                         <div class="tag tag-success">Hoạt động</div>
+                                                        <% } else{%>
+                                                        <div class="tag tag-danger">Đang khoá</div>
+                                                        <% }%></td>
+                                                    <td>
+                                                        <% if(employees[i].status == "1"){ %>
+                                                        <button
+                                                            onclick="changeStatus(<%=employees[i].id%>);return false;"
+                                                            type="button" class="btn mr-1 mb-1 btn-danger btn-sm"><i
+                                                                class="fa fa-times"></i></button>
+                                                        <% } else{%>
+                                                        <button
+                                                            onclick="changeStatus(<%=employees[i].id%>);return false;"
+                                                            type="button" class="btn mr-1 mb-1 btn-primary btn-sm"><i
+                                                                class="fa fa-check"></i></button>
+                                                        <% }%>
                                                     </td>
                                                     <td>
-                                                        <button onclick="location.href='/employees/edit'"
-                                                            data-toggle="tooltip" data-original-title="Sửa thông tin"
-                                                            type="button"
-                                                            class="btn rounded-circle btn-icon btn-primary btn-sm show-tooltip"><i
-                                                                class="fa fa-pencil"></i></button>
+
+                                                    <button data-toggle="modal" data-target="#exampleModal"
+                                                        data-original-title="Sửa thông tin" type="button"
+                                                        class="btn btn-icon btn-primary btn-sm show-tooltip abc"><i
+                                                            class="fa fa-pencil"></i></button>
                                                     </td>
                                                 </tr>
+                                                <% }%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -94,6 +158,22 @@
     </div>
     <%  include ./../emlements/defaultFooter %>
     <%  include ./../emlements/script %>
+    <script>
+        var rIndex, table = document.getElementById("table");
+        $(".abc").click(function () {
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    // get the seected row index
+                    rIndex = this.rowIndex;
+                    document.getElementById("name").value = this.cells[1].innerHTML;
+                    document.getElementById("phoneNumber").value = this.cells[3].innerHTML;
+                };
+            }
+        });
+        function changeStatus(id){
+            alert(id);
+        }
+    </script>
 
 </body>
 
