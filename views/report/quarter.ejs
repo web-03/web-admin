@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
+
+<head>
+	<title>Danh sách khách hàng</title>
+	<%  include ./../emlements/css %>
+</head>
+
+<body data-open="click" data-menu="vertical-menu" data-col="2-columns"
+	class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar">
+	<nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-light bg-gradient-x-grey-blue">
+		<%  include ./../emlements/defaultHeader %>
+	</nav>
+	<%  include ./../emlements/defaultMenu %>
+	<div class="app-content content container-fluid">
+		<div class="content-wrapper">
+			<div class="content-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title" id="horz-layout-card-center">Tìm kiếm</h4>
+								<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+							</div>
+							<div class="card-body collapse in">
+								<div class="card-block">
+									<form id="formSearch" class="form form-horizontal" action="${searchUrl}"
+										method='GET'>
+										<div class="form-group col-md-4">
+											<label>Ngày</label>
+											<input type="date" id="from" class="form-control" name="from">
+										</div>
+										<div class="form-group col-md-4">
+											<label>Đến ngày</label>
+											<input type="date" id="to" class="form-control" name="to">
+										</div>
+
+										<div class="form-group col-md-4">
+											<label>Xem kết quả</label></br />
+											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
+												<i class="fa fa-check-square-o"></i> Xem
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xl-12 col-lg-12">
+						<div class="card">
+
+							<div class="card-body">
+								<div class="card-block">
+									<ul class="nav nav-tabs nav-underline no-hover-bg">
+										<li class="nav-item"><a class="nav-link" id="base-tab31"
+												data-toggle="tab" aria-controls="tab31" href="#tab31"
+												aria-expanded="true">THỐNG KÊ NGÀY</a></li>
+										<li class="nav-item"><a class="nav-link" id="base-tab32" data-toggle="tab"
+												aria-controls="tab32" href="#tab32" aria-expanded="false">THỐNG KÊ
+												TUẦN</a></li>
+										<li class="nav-item"><a class="nav-link" id="base-tab33" data-toggle="tab"
+												aria-controls="tab33" href="#tab33" aria-expanded="false">THỐNG KÊ
+												THÁNG</a></li>
+										<li class="nav-item"><a class="nav-link active" id="base-tab35" data-toggle="tab"
+												aria-controls="tab35" href="#tab35" aria-expanded="false">THỐNG KÊ
+												QUÝ</a></li>
+
+										<li class="nav-item"><a class="nav-link" id="base-tab34" data-toggle="tab"
+												aria-controls="tab34" href="#tab34" aria-expanded="false">THỐNG KÊ
+												NĂM</a></li>
+
+									</ul>
+									<div class="tab-content px-1 pt-1">
+										<!-- ========= form tab 1 ======== -->
+
+
+										<div role="tabpanel" class="tab-pane" id="tab31" aria-expanded="true"
+											aria-labelledby="base-tab31">
+
+											<section id="chartjs-line-charts">
+												<!-- Line Chart -->
+												<div class="row">
+													<div class="card">
+														<div class="card-header">
+															<!-- Pie chart -->
+															<div class="row match-height">
+																<div class="col-sm-12">
+																	<div id="pie_chart"></div>
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="line_chart"></div>
+																	</div>
+																	<hr>
+																	<br>
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="bar_chart"></div>
+																	</div>
+
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="revenue_chart"></div>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="card">
+														<div class="card-header">
+															<h4 class="card-title" id="horz-layout-card-center">Thông
+																tin báo cáo</h4>
+														</div>
+														<div class="dataTables_scroll">
+															<div class="card-body collapse in">
+																<div class="table-responsive">
+																	<table class="table table-bordered mb-0">
+																		<thead>
+																			<tr>
+																				<th>Giờ</th>
+																				<th>Doanh thu</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr>
+																				<td>13h</td>
+																				<td>2970000vnđ</td>
+																			</tr>
+																			<tr>
+																				<td>23h</td>
+																				<td>1260000vnđ</td>
+																			</tr>
+																			<tr>
+																				<td>22h</td>
+																				<td>750000vnđ</td>
+																			</tr>
+																			<tr>
+																				<td>21h</td>
+																				<td>182000vnđ</td>
+																			</tr>
+																			<tr>
+																				<td>20h</td>
+																				<td>1200000vnđ</td>
+																			</tr>
+																			<tr>
+																				<td>9h</td>
+																				<td>2970000vnđ</td>
+																			</tr>
+																			<tr>
+																					<td><strong>Tổng cộng</strong></td>
+																				<td><strong>129700000vnđ</strong></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="tab-pane" id="tab32" aria-labelledby="base-tab32">
+											<!-- Column Chart -->
+											<div class="row">
+												<div class="card">
+													<div class="card-header">
+														<!-- The next line rotates HTML tooltips by 30 degrees clockwise. -->
+														<div class="row match-height">
+															<div id="pie_chart_week"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="line_chart_week"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="bar_chart_week"
+																style="width: 900px; height: 300px;"></div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="card">
+																<div class="card-header">
+																	<h4 class="card-title" id="horz-layout-card-center">
+																		Thông
+																		tin báo cáo</h4>
+																</div>
+
+																<div class="dataTables_scroll" align="right">
+
+																	<div class="card-body collapse in">
+																		<div class="table-responsive">
+																			<table class="table table-bordered mb-0">
+																				<thead>
+																					<tr>
+																						<th>Thứ</th>
+																						<th>Doanh thu</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr>
+																						<td>Thứ 2</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>Thứ 3</td>
+																						<td>1260000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>Thứ 4</td>
+																						<td>750000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>Thứ 5</td>
+																						<td>182000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>Thứ 6</td>
+																						<td>1200000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>Thứ 7</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+
+																					<tr>
+																						<td>Chủ nhật</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+																					<tr>
+																							<td><strong>Tổng cộng</strong></td>
+																						<td><strong>129700000vnđ</strong></td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="tab-pane" id="tab33" aria-labelledby="base-tab33">
+											<!-- Column Chart -->
+											<div class="row">
+												<div class="card">
+													<div class="card-header">
+														<!-- The next line rotates HTML tooltips by 30 degrees clockwise. -->
+														<div class="row match-height">
+															<div id="pie_chart_month"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="line_chart_month"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="bar_chart_month"
+																style="width: 900px; height: 300px;"></div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="card">
+																<div class="card-header">
+																	<h4 class="card-title" id="horz-layout-card-center">
+																		Thông
+																		tin báo cáo</h4>
+																</div>
+
+																<div class="dataTables_scroll" align="right">
+
+																	<div class="card-body collapse in">
+																		<div class="table-responsive">
+																			<table class="table table-bordered mb-0">
+																				<thead>
+																					<tr>
+																						<th>Ngày</th>
+																						<th>Doanh thu</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr>
+																						<td>04/04/2019</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>03/04/2019</td>
+																						<td>1260000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>13/04/2019</td>
+																						<td>750000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>15/04/2019</td>
+																						<td>182000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>16/04/2019</td>
+																						<td>1200000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>17/04/2019</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>17/04/2019</td>
+																						<td>2970000vnđ</td>
+																					</tr>
+																					<tr>
+																							<td><strong>Tổng cộng</strong></td>
+																						<td><strong>102970000vnđ</strong></td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="tab-pane active" id="tab35" aria-labelledby="base-tab35">
+											<!-- Column Chart -->
+											<div class="row">
+												<div class="card">
+													<div class="card-header">
+														<!-- The next line rotates HTML tooltips by 30 degrees clockwise. -->
+														<div class="row match-height">
+															<div id="pie_chart_quarter"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="line_chart_quarter"
+																style="width: 900px; height: 300px;"></div>
+															<hr>
+															<br>
+															<div id="bar_chart_quarter"
+																style="width: 900px; height: 300px;"></div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xs-12">
+															<div class="card">
+																<div class="card-header">
+																	<h4 class="card-title" id="horz-layout-card-center">
+																		Thông
+																		tin báo cáo</h4>
+																</div>
+
+																<div class="dataTables_scroll" align="right">
+
+																	<div class="card-body collapse in">
+																		<div class="table-responsive">
+																			<table class="table table-bordered mb-0">
+																				<thead>
+																					<tr>
+																						<th>Tháng</th>
+																						<th>Doanh thu</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<tr>
+																						<td>T01/2019</td>
+																						<td>828000000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>T02/2019</td>
+																						<td>778000000vnđ</td>
+																					</tr>
+																					<tr>
+																						<td>T03/2019</td>
+																						<td>1200000000vnđ</td>
+																					</tr>
+																					<tr>
+																							<td><strong>Tổng cộng</strong></td>
+																						<td><strong>2650000000vnđ</strong></td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
+
+
+										<!-- bao cao khach hang nam -->
+										<div class="tab-pane" id="tab34" aria-labelledby="base-tab34">
+											<div class="row">
+
+												<!-- Simple Pie Chart -->
+												<section id="chartjs-pie-charts">
+													<!--  Pie Chart -->
+													<div class="col-xs-12">
+														<div class="card">
+															<div class="card-header">
+																<div class="row match-height">
+																	<div id="bar_chart_year"
+																		style="width: 900px; height: 500px;"></div>
+
+																	<hr>
+																	<br>
+																	<div id="pie_chart_year"
+																		style="width: 900px; height: 500px;"></div>
+																	<hr>
+																	<br>
+																	<div id="line_chart_year"
+																		style="width: 900px; height: 500px;"></div>
+																</div>
+																<div class="col-xs-12">
+																	<div class="card">
+																		<div class="card-header">
+																			<h4 class="card-title"
+																				id="horz-layout-card-center">Thông
+																				tin báo cáo</h4>
+																		</div>
+
+																		<div class="dataTables_scroll" align="right">
+
+																			<div class="card-body collapse in">
+																				<div class="table-responsive">
+																					<table
+																						class="table table-bordered mb-0">
+																						<thead>
+																							<tr>
+																								<th>Năm</th>
+																								<th>Doanh thu</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																							<tr>
+																								<td>T01/2019</td>
+																								<td>828000000vnđ</td>
+																							</tr>
+																							<tr>
+																								<td>T02/2019</td>
+																								<td>778000000vnđ</td>
+																							</tr>
+																							<tr>
+																								<td>T03/2019</td>
+																								<td>1200000000vnđ</td>
+																							</tr>
+																							<tr>
+																								<td>T04/2019</td>
+																								<td>628000000vnđ</td>
+																							</tr>
+																							<tr>
+																								<td>T05/2019</td>
+																								<td>578000000vnđ</td>
+																							</tr>
+																							<tr>
+																								<td><strong>Tổng cộng</strong></td>
+																								<td><strong>3650000000vnđ</strong></td>
+																							</tr>
+																						</tbody>
+																					</table>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+											</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%  include ./../emlements/defaultFooter %>
+	<%  include ./../emlements/script %>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script type="text/javascript">
+
+
+		// Load the Visualization API and the piechart package.
+		google.load('visualization', '1.0', {
+			'packages': ['corechart']
+		});
+
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawChart);
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawChartWeek);
+		// Callback that creates and populates a data table,
+		// instantiates the pie chart, passes in the data and
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawMonthReport);
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawYearReport);
+
+		google.setOnLoadCallback(drawQuarterReport);
+
+		// draws it.
+		function drawChart() {
+
+			// Create the data table.    
+			var data = google.visualization.arrayToDataTable([
+				['Report', 'Doanh thu'],
+				['13h', 2970000.0],
+
+				['23h', 1260000.0],
+
+				['22h', 750000.0],
+
+				['21h', 182000.0],
+
+				['20h', 1200000.0],
+
+				['9h', 2100000.0],
+			]);
+			// Set chart options
+			var options = {
+				'title': 'Báo Cáo Doanh thu Theo Ngày',
+				is3D: true,
+				pieSliceText: 'label',
+				tooltip: { showColorCode: true },
+				'width': 900,
+				'height': 400
+			};
+
+			// Instantiate and draw our chart, passing in some options.
+			var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+			chart.draw(data, options);
+
+			var line_chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+			line_chart.draw(data, options);
+
+			var bar_chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+			bar_chart.draw(data, options);
+
+
+
+		}
+
+
+		function drawChartWeek() {
+
+			// Create the data table.    
+			var data = google.visualization.arrayToDataTable([
+				['Report', 'Doanh thu'],
+				['Thứ 2', 2970000.0],
+
+				['Thứ 3', 1260000.0],
+
+				['Thứ 4', 750000.0],
+
+				['Thứ 5', 182000.0],
+
+				['Thứ 6', 1200000.0],
+
+				['Thứ 7', 2100000.0],
+				['Chủ nhật', 2100000.0],
+			]);
+			// Set chart options
+			var options = {
+				title: "Thống kê Doanh thu trong Tuần",
+				is3D: true,
+				pieSliceText: 'label',
+				tooltip: { showColorCode: true },
+				'width': 900,
+				'height': 400
+			};
+
+
+
+			// Instantiate and draw our chart, passing in some options.
+			var pieChartWeek = new google.visualization.PieChart(document.getElementById("pie_chart_week"));
+			pieChartWeek.draw(data, options);
+
+			var lineChartWeek = new google.visualization.LineChart(document.getElementById("line_chart_week"));
+			lineChartWeek.draw(data, options);
+
+			var barChartWeek = new google.visualization.ColumnChart(document.getElementById("bar_chart_week"));
+			barChartWeek.draw(data, options);
+		}
+
+		function drawMonthReport() {
+			// Create the data table.    
+			var data = google.visualization.arrayToDataTable([
+				['Report', 'Doanh Thu'],
+				['04/04/2019', 5070000.0],
+
+				['03/04/2019', 1950000.0],
+
+				['13/04/2019', 1280000.0],
+
+				['15/04/2019', 5260000.0],
+
+				['16/04/2019', 2360000.0],
+
+				['17/04/2019', 4560000.0],
+
+				['18/04/2019', 1000000.0],
+			]);
+			// Set chart options
+			var options = {
+				title: "Báo Cáo Doanh Thu Tháng",
+				is3D: true,
+				pieSliceText: 'label',
+				tooltip: { showColorCode: true },
+				'width': 900,
+				'height': 400
+			};
+			// Instantiate and draw our chart, passing in some options.
+			var pieChartMonth = new google.visualization.PieChart(document.getElementById("pie_chart_month"));
+			pieChartMonth.draw(data, options);
+
+			var lineChartMonth = new google.visualization.LineChart(document.getElementById("line_chart_month"));
+			lineChartMonth.draw(data, options);
+
+			var barChartMonth = new google.visualization.ColumnChart(document.getElementById("bar_chart_month"));
+			barChartMonth.draw(data, options);
+		}
+
+		function drawQuarterReport() {
+			// Create the data table.    
+			var data = google.visualization.arrayToDataTable([
+				['Report', 'Doanh Thu'],
+				['T01/2019', 828000000.0],
+				['T02/2019', 778000000.0],
+				['T03/2019', 1200000000.0],
+			]);
+			// Set chart options
+			var options = {
+				title: "Báo Cáo Doanh Thu Tháng",
+				is3D: true,
+				pieSliceText: 'label',
+				tooltip: { showColorCode: true },
+				'width': 900,
+				'height': 400
+			};
+			// Instantiate and draw our chart, passing in some options.
+			var pieChartMonth = new google.visualization.PieChart(document.getElementById("pie_chart_quarter"));
+			pieChartMonth.draw(data, options);
+
+			var lineChartMonth = new google.visualization.LineChart(document.getElementById("line_chart_quarter"));
+			lineChartMonth.draw(data, options);
+
+			var barChartMonth = new google.visualization.ColumnChart(document.getElementById("bar_chart_quarter"));
+			barChartMonth.draw(data, options);
+		}
+
+		function drawYearReport() {
+			// Create the data table.    
+			var data = google.visualization.arrayToDataTable([
+				['Report', 'Doanh Thu'],
+				['T01/2019', 828000000.0],
+				['T02/2019', 778000000.0],
+				['T03/2019', 1200000000.0],
+				['T04/2019', 628000000.0],
+				['T05/2019', 578000000.0],
+			]);
+			// Set chart options
+			var options = {
+				title: "Báo Cáo Doanh Thu Năm",
+				is3D: true,
+				pieSliceText: 'label',
+				tooltip: { showColorCode: true },
+				'width': 900,
+				'height': 400
+			};
+			// Instantiate and draw our chart, passing in some options.
+			var barChartYear = new google.visualization.ColumnChart(document.getElementById("bar_chart_year"));
+			barChartYear.draw(data, options);
+
+			var lineChartYear = new google.visualization.LineChart(document.getElementById("line_chart_year"));
+			lineChartYear.draw(data, options);
+
+			var pieChartYear = new google.visualization.PieChart(document.getElementById("pie_chart_year"));
+			pieChartYear.draw(data, options);
+		}
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
+
+<head>
+    <title>Danh sách khách hàng</title>
+    <%  include ./../emlements/css %>
+</head>
+
+<body data-open="click" data-menu="vertical-menu" data-col="2-columns"
+    class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar">
+    <nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-light bg-gradient-x-grey-blue">
+        <%  include ./../emlements/defaultHeader %>
+    </nav>
+    <%  include ./../emlements/defaultMenu %>
+    <div class="app-content content container-fluid">
+        <div class="content-wrapper">
+            <div class="content-body">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="form-group row">
+                                    <form class="form form-horizontal" action="customers' />" method='GET'>
+
+                                        <div class="col-md-2">
+                                            <select class="form-control input-sm" id="status" name="status" name="status">
+                                                <option value="-1">Chọn trạng thái</option>
+                                                <option value="1">Đang hoạt động</option>
+                                                <option value="0">Đã ngưng</option>
+                                            </select>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <input type="text" id="name" class="input-sm form-control"
+                                                placeholder="Tên nhân viên" name="name">
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <button type="submit" class="btn btn-sm btn-primary">
+                                                <i class="ft-search"></i> Tìm kiếm
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <div class="col-md-2">
+                                        <button title="Tạo mới" type="button" onclick="location.href='customers/create'" class="btn btn-sm btn-outline-primary mr-1">
+                                            <i class="ft-plus-circle"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="card-body collapse in">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Tài khoản</th>
+                                                    <th>Tên</th>
+                                                    <th>Chức vụ</th>
+                                                    <th>Nơi sinh</th>
+                                                    <th>Trạng thái</th>
+                                                    <th>Chức năng</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th scope="row">1</th>
+                                                    <td>KH001</td>
+                                                    <td>Ngô Trần Nguyễn</td>
+                                                    <td>Tư vấn</td>
+                                                    <td>Đồng Nai</td>
+                                                    <td>
+                                                        <div class="tag tag-success">Hoạt động</div>
+                                                    </td>
+                                                    <td>
+                                                        <button onclick="location.href='/customers/edit'"
+                                                            data-toggle="tooltip" data-original-title="Sửa thông tin"
+                                                            type="button"
+                                                            class="btn rounded-circle btn-icon btn-primary btn-sm show-tooltip"><i
+                                                                class="fa fa-pencil"></i></button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%  include ./../emlements/defaultFooter %>
+    <%  include ./../emlements/script %>
+
+</body>
+
+</html>
