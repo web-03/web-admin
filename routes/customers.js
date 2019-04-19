@@ -6,8 +6,31 @@ var data = [
   {id: '3', name: 'Khách 3', account:'KH003', phoneNumber:'0344179692', place:'Đồng Nai', status:'0'},
 ]
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/',  function(req, res, next) {
+  let name = req.name;
+  let status = req.status;
+  console.log(name);
+  console.log(status);
   res.render('customer/index',{customers : data})
+});
+
+router.post('/', function(req, res, next) {
+  let name = req.body.name;
+  let status = req.body.status;
+  console.log(name);
+  console.log(status);
+  let customers=[];
+  if(status!= "-1" || name != ""){
+    data.forEach(function(item){
+      if((item.status == status || status=="-1") && (item.name == name || name=="")){
+        customers.push(item);
+      }
+    });
+  }
+  else{
+    customers = data;
+  }
+  res.render('customer/index',{customers : customers})
 });
 
 router.get('/create', function(req, res, next) {
