@@ -21,66 +21,125 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="form-group row">
-                                    <form class="form form-horizontal" action="customers' />" method='GET'>
-
+                                    <div class="col-sm-6">
                                         <div class="col-md-2">
-                                            <select class="form-control input-sm" id="status" name="status" name="status">
-                                                <option value="-1">Chọn trạng thái</option>
-                                                <option value="1">Đang hoạt động</option>
-                                                <option value="0">Đã ngưng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <input type="text" id="name" class="input-sm form-control"
-                                                placeholder="Tên nhân viên" name="name">
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-sm btn-primary">
-                                                <i class="ft-search"></i> Tìm kiếm
+                                            <button type="submit" onclick="done()" class="btn btn-sm btn-success">
+                                                <i class="ft-search"></i> Đã giao
                                             </button>
                                         </div>
-                                    </form>
-                                    <div class="col-md-2">
-                                        <button title="Tạo mới" type="button" onclick="location.href='customers/create'" class="btn btn-sm btn-outline-primary mr-1">
-                                            <i class="ft-plus-circle"></i>
-                                        </button>
+
+                                        <div class="col-md-2">
+                                            <button type="submit" onclick="delivering()" class="btn btn-sm btn-primary">
+                                                <i class="ft-search"></i> Đang giao
+                                            </button>
+                                        </div>
+
+                                        <div class="col-md-2">
+                                            <button type="submit" onclick="just()" class="btn btn-sm btn-warning">
+                                                <i class="ft-search"></i> Chưa giao
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="card-body collapse in">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered mb-0">
+                                            <table id="done" class="table table-bordered mb-0" style="">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Id</th>
+                                                            <th>Tên sản phẩm</th>
+                                                            <th>Tên gian hàng</th>
+                                                            <th>Số lượng</th>
+                                                            <th>Đơn giá</th>
+                                                            <th>Tổng tiền</th>
+                                                            <th>Trạng thái</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <% for(var i=0; i< orders.length; i++){ %>
+                                                            <% if(orders[i].status == "2"){ %>
+                                                            <tr>
+                                                                <td><%= orders[i].id %></td>
+                                                                <td><%= orders[i].productName %></td>
+                                                                <td><%= orders[i].categoryName %></td>
+                                                                <td><%= orders[i].quantity %></td>
+                                                                <td><%= orders[i].unitPrice %></td>
+                                                                <td><%= orders[i].totalAmount %></td>
+                                                                <td>
+                                                                    <div class="tag tag-success">Đã giao</div>
+                                                                   
+                                                                </td>
+                                                                 
+                                                            </tr>
+                                                            <% }%>
+                                                            <% }%>
+                                                    </tbody>
+                                                </table>
+                                        
+                                        <table id="delivering" class="table table-bordered mb-0" style="display:none;">
                                             <thead>
                                                 <tr>
                                                     <th>Id</th>
-                                                    <th>Tài khoản</th>
-                                                    <th>Tên</th>
-                                                    <th>Chức vụ</th>
-                                                    <th>Nơi sinh</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Tên gian hàng</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Tổng tiền</th>
                                                     <th>Trạng thái</th>
-                                                    <th>Chức năng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <% for(var i=0; i< orders.length; i++){ %>
+                                                    <% if(orders[i].status == "1"){ %>
+                                                    <tr>
+                                                        <td><%= orders[i].id %></td>
+                                                        <td><%= orders[i].productName %></td>
+                                                        <td><%= orders[i].categoryName %></td>
+                                                        <td><%= orders[i].quantity %></td>
+                                                        <td><%= orders[i].unitPrice %></td>
+                                                        <td><%= orders[i].totalAmount %></td>
+                                                        <td>
+                                                            <div class="tag tag-primary">Đang giao</div>
+                                                           
+                                                        </td>
+                                                         
+                                                    </tr>
+                                                    <% }%>
+                                                    <% }%>
+                                            </tbody>
+                                        </table>
+
+                                        <table id="just" class="table table-bordered mb-0" style="display:none;">
+                                            <thead>
                                                 <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>KH001</td>
-                                                    <td>Ngô Trần Nguyễn</td>
-                                                    <td>Tư vấn</td>
-                                                    <td>Đồng Nai</td>
-                                                    <td>
-                                                        <div class="tag tag-success">Hoạt động</div>
-                                                    </td>
-                                                    <td>
-                                                        <button onclick="location.href='/customers/edit'"
-                                                            data-toggle="tooltip" data-original-title="Sửa thông tin"
-                                                            type="button"
-                                                            class="btn rounded-circle btn-icon btn-primary btn-sm show-tooltip"><i
-                                                                class="fa fa-pencil"></i></button>
-                                                    </td>
+                                                    <th>Id</th>
+                                                    <th>Tên sản phẩm</th>
+                                                    <th>Tên gian hàng</th>
+                                                    <th>Số lượng</th>
+                                                    <th>Đơn giá</th>
+                                                    <th>Tổng tiền</th>
+                                                    <th>Trạng thái</th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% for(var i=0; i< orders.length; i++){ %>
+                                                    <% if(orders[i].status == "0"){ %>
+                                                    <tr>
+                                                        <td><%= orders[i].id %></td>
+                                                        <td><%= orders[i].productName %></td>
+                                                        <td><%= orders[i].categoryName %></td>
+                                                        <td><%= orders[i].quantity %></td>
+                                                        <td><%= orders[i].unitPrice %></td>
+                                                        <td><%= orders[i].totalAmount %></td>
+                                                        <td>
+                                                            <div class="tag tag-warning">Chưa giao</div>
+                                                           
+                                                        </td>
+                                                         
+                                                    </tr>
+                                                    <% }%>
+                                                    <% }%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -94,6 +153,23 @@
     </div>
     <%  include ./../emlements/defaultFooter %>
     <%  include ./../emlements/script %>
+    <script>
+        function done(){
+            $('#done').attr('style','');
+            $('#delivering').attr('style','display:none;');
+            $('#just').attr('style','display:none;');
+        }
+        function delivering(){
+            $('#done').attr('style','display:none;');
+            $('#delivering').attr('style','');
+            $('#just').attr('style','display:none;');
+        }
+        function just(){
+            $('#done').attr('style','display:none;');
+            $('#delivering').attr('style','display:none;');
+            $('#just').attr('style','');
+        }
+    </script>
 
 </body>
 
