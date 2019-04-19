@@ -33,7 +33,7 @@
 
                                         <div class="col-md-2">
                                             <input type="text" id="name" class="input-sm form-control"
-                                                placeholder="Tên nhân viên" name="name">
+                                                placeholder="Tên khách hàng" name="name">
                                         </div>
 
                                         <div class="col-md-2">
@@ -42,11 +42,6 @@
                                             </button>
                                         </div>
                                     </form>
-                                    <div class="col-md-2">
-                                        <button title="Tạo mới" type="button" onclick="location.href='customers/create'" class="btn btn-sm btn-outline-primary mr-1">
-                                            <i class="ft-plus-circle"></i>
-                                        </button>
-                                    </div>
                                 </div>
                                 <hr>
                                 <div class="card-body collapse in">
@@ -57,23 +52,40 @@
                                                     <th>Id</th>
                                                     <th>Tài khoản</th>
                                                     <th>Tên</th>
-                                                    <th>Chức vụ</th>
+                                                    <th>Số điện thoại</th>
                                                     <th>Nơi sinh</th>
                                                     <th>Trạng thái</th>
+                                                    <th>Chức năng</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>KH001</td>
-                                                    <td>Ngô Trần Nguyễn</td>
-                                                    <td>Tư vấn</td>
-                                                    <td>Đồng Nai</td>
-                                                    <td>
-                                                        <div class="tag tag-success">Hoạt động</div>
-                                                    </td>
-                                                    
-                                                </tr>
+                                                    <% for(var i=0; i< customers.length; i++){ %>
+                                                        <tr>
+                                                            <td><%= customers[i].id %></td>
+                                                            <td><%= customers[i].name %></td>
+                                                            <td><%= customers[i].account %></td>
+                                                            <td><%= customers[i].phoneNumber %></td>
+                                                            <td><%= customers[i].place %></td>
+                                                            <td><% if(customers[i].status == "1"){ %>
+                                                                <div class="tag tag-success">Hoạt động</div>
+                                                                <% } else{%>
+                                                                <div class="tag tag-danger">Đang khoá</div>
+                                                                <% }%></td>
+                                                            <td>
+                                                                <% if(customers[i].status == "1"){ %>
+                                                                <button
+                                                                    onclick="changeStatus(<%=customers[i].id%>);return false;"
+                                                                    type="button" class="btn mr-1 mb-1 btn-danger btn-sm"><i
+                                                                        class="fa fa-times"></i></button>
+                                                                <% } else{%>
+                                                                <button
+                                                                    onclick="changeStatus(<%=customers[i].id%>);return false;"
+                                                                    type="button" class="btn mr-1 mb-1 btn-primary btn-sm"><i
+                                                                        class="fa fa-check"></i></button>
+                                                                <% }%>
+                                                            </td>
+                                                        </tr>
+                                                        <% }%>
                                             </tbody>
                                         </table>
                                     </div>
@@ -87,6 +99,11 @@
     </div>
     <%  include ./../emlements/defaultFooter %>
     <%  include ./../emlements/script %>
+    <script>
+        function changeStatus(id){
+            alert(id);
+        }
+    </script>
 
 </body>
 
