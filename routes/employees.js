@@ -12,6 +12,23 @@ router.get('/', function(req, res, next) {
   res.render('employee/index',{employees : data});
 });
 
+router.post('/', function(req, res, next) {
+  let name = req.body.name;
+  let status = req.body.status;
+  let employees=[];
+  if(status!= "-1" || name != ""){
+    data.forEach(function(item){
+      if((item.status == status || status=="-1") && (item.name == name || name=="")){
+        employees.push(item);
+      }
+    });
+  }
+  else{
+    employees = data;
+  }
+  res.render('employee/index',{employees : employees})
+});
+
 router.get('/create', function(req, res, next) {
   res.render('employee/new',{title:'Thêm nhân viên'})
 });

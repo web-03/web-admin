@@ -17,8 +17,6 @@ router.get('/',  function(req, res, next) {
 router.post('/', function(req, res, next) {
   let name = req.body.name;
   let status = req.body.status;
-  console.log(name);
-  console.log(status);
   let customers=[];
   if(status!= "-1" || name != ""){
     data.forEach(function(item){

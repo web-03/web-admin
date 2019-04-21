@@ -23,12 +23,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/employees', require('./routes/employees'));
-app.use('/customers', require('./routes/customers'));
-app.use('/categories', require('./routes/categories'));
-app.use('/products', require('./routes/products'));
-app.use('/orders', require('./routes/orders'));
-app.use('/reports', require('./routes/reports'));
+app.use('/nhan-vien', require('./routes/employees'));
+app.use('/khach-hang', require('./routes/customers'));
+app.use('/gian-hang', require('./routes/categories'));
+app.use('/san-pham', require('./routes/products'));
+app.use('/don-hang', require('./routes/orders'));
+app.use('/thong-ke-bao-cao', require('./routes/reports'));
 app.use('/tops', require('./routes/tops'));
 
 // catch 404 and forward to error handler

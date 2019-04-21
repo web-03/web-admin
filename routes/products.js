@@ -17,6 +17,23 @@ router.get('/', function(req, res, next) {
   res.render('product/index',{products: data, categories: categories})
 });
 
+router.post('/', function(req, res, next) {
+  let name = req.body.name;
+  let status = req.body.status;
+  let products=[];
+  if(status!= "-1" || name != ""){
+    data.forEach(function(item){
+      if((item.status == status || status=="-1") && (item.name == name || name=="")){
+        products.push(item);
+      }
+    });
+  }
+  else{
+    products = data;
+  }
+  res.render('product/index',{products: products, categories: categories})
+});
+
 router.get('/create', function(req, res, next) {
   res.render('product/new',{title:'Thêm sản phẩm'})
 });

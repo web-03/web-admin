@@ -11,6 +11,23 @@ router.get('/', function (req, res, next) {
   res.render('category/index', { categories: data });
 });
 
+router.post('/', function(req, res, next) {
+  let name = req.body.name;
+  let status = req.body.status;
+  let categories=[];
+  if(status!= "-1" || name != ""){
+    data.forEach(function(item){
+      if((item.status == status || status=="-1") && (item.name == name || name=="")){
+        categories.push(item);
+      }
+    });
+  }
+  else{
+    categories = data;
+  }
+  res.render('category/index',{categories : categories})
+});
+
 router.get('/create', function (req, res, next) {
   res.render('category/new', { title: 'Thêm gian hàng' })
 });
