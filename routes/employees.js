@@ -29,6 +29,14 @@ router.post('/', function(req, res, next) {
   res.render('employee/index',{employees : employees})
 });
 
+router.get('/doi-mat-khau', function(req, res, next) {
+  res.render('employee/changePassword',{title:'Đổi mật khẩu'})
+});
+
+router.post('/doi-mat-khau', function(req, res, next) {
+  res.render('index');
+});
+
 router.get('/create', function(req, res, next) {
   res.render('employee/new',{title:'Thêm nhân viên'})
 });
