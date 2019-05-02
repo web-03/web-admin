@@ -4,9 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const ejsLint = require('ejs-lint');
-
 var usersRouter = require('./routes/users');
-
+var config = require('./config/config')
 var app = express();
 
 // view engine setup
@@ -40,30 +39,25 @@ app.use(function(err, req, res, next) {
 });
 
 
-//var mysql = require('mysql');
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'root',
-//   password : 'root',
-//   database : 'cnpm'
-// });
+var mysql = require('mysql');
+var connection = mysql.createConnection(config);
 
-// connection.connect()
+connection.connect()
 
-// var employee = function(username, name){
-//   this.username = username;
-//   this.name = name;
-// }
-// let sql = 'CALL filterTodo(?)';
-// connection.query('CALL sp_filterTodo(3)', function (err, rows, fields) {
-//   if (err) throw err
+var employee = function(username, name){
+  this.username = username;
+  this.name = name;
+}
 
-//   rows.forEach(element => {
-//     var x = new employee(element.username, element.full_name);
-//     console.log(x);
-//   })
-// })
+connection.query('select * from employees', function (err, rows, fields) {
+  if (err) throw err
 
-// connection.end()
+  rows.forEach(element => {
+    var x = new employee(element.username, element.full_name);
+    console.log(x);
+  })
+})
+
+connection.end()
 
 module.exports = app;
