@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const ejsLint = require('ejs-lint');
 var usersRouter = require('./routes/users');
-var config = require('./config/config')
 var app = express();
 
 // view engine setup
@@ -37,27 +36,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-var mysql = require('mysql');
-var connection = mysql.createConnection(config);
-
-connection.connect()
-
-var employee = function(username, name){
-  this.username = username;
-  this.name = name;
-}
-
-connection.query('select * from employees', function (err, rows, fields) {
-  if (err) throw err
-
-  rows.forEach(element => {
-    var x = new employee(element.username, element.full_name);
-    console.log(x);
-  })
-})
-
-connection.end()
 
 module.exports = app;

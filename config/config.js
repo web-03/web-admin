@@ -2,7 +2,7 @@ let config = {
     host    : 'localhost',
     user    : 'root',
     password: 'root',
-    database: 'cnpm'
+    database: 'pt'
   };
    
   module.exports = config;

@@ -12,6 +12,9 @@ var index = require('../controller/index');
 
 router.get('/gian-hang', category.list);
 router.get('/nhan-vien', employee.list);
+router.post('/nhan-vien', employee.listp);
+router.post('/nhan-vien/change-status', employee.changeStatus);
+router.post('/nhan-vien/taomoi', employee.create);
 router.get('/khach-hang', customer.list);
 router.get('/san-pham', product.list);
 router.get('/don-hang', order.list);

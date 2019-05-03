@@ -1,33 +1,98 @@
 var express = require('express');
+var con = require('./../config/key');
 var router = express.Router();
 
-var data = [
-  {id: '1', name: 'Nguyễn Đức Trà', account:'NV001', phoneNumber:'0344179690', roleName:'Thu ngân',place:'Quảng Nam', status:'1'},
-  {id: '2', name: 'Ngô Trần Nguyễn', account:'NV002', phoneNumber:'0344179691', roleName:'shipping',place:'Đồng Nai', status:'1'},
-  {id: '3', name: 'Vũ Tuấn Toàn', account:'NV003', phoneNumber:'0344179692', roleName:'Tư vấn',place:'Đồng Nai', status:'0'},
-]
 
+var employee = function(id, name, account, phoneNumber, place, status){
+  this.id = id;
+  this.name = name;
+  this.account = account;
+  this.phoneNumber = phoneNumber;
+  this.place = place;
+  this.status = status;
+}
+
+var employeesAll = [];
+con.query('select * from employees', function (err, rows, fields) {
+  if (err) throw err
+
+  rows.forEach(element => {
+    var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
+    employeesAll.push(x);
+  })
+});
 /* GET home page. */
 router.list = (req, res, next) => {
-  res.render('employee/index',{employees : data});
+  let employees =[];
+  employees = employeesAll;
+  res.render('employee/index',{employees : employees});
 };
 
-router.post('/', function(req, res, next) {
+router.listp = (req, res, next) => {
   let name = req.body.name;
   let status = req.body.status;
-  let employees=[];
+  let employees =[];
   if(status!= "-1" || name != ""){
-    data.forEach(function(item){
+    employeesAll.forEach(function(item){
       if((item.status == status || status=="-1") && (item.name == name || name=="")){
         employees.push(item);
       }
     });
   }
   else{
-    employees = data;
+    employees = employeesAll;
   }
   res.render('employee/index',{employees : employees})
-});
+};
+
+router.changeStatus = (req, res, id, next) => {
+  
+  let employee;
+  console.log(id);
+  if(id > 0){
+    employeesAll.forEach(function(item){
+      if(item.id == id){
+        employees.push(item);
+      }
+    });
+  }
+  else{
+    employees = employeesAll;
+  }
+  res.render('employee/index',{employees : employees})
+};
+
+
+router.create = (req, res, next) => {
+  let name = req.body.name;
+  let status = 1;
+  let id = req.body.id;
+  if(id==""){
+    id=0;
+  }
+  let phoneNumber = req.body.phoneNumber;
+  let place = req.body.place;
+  console.log(id);
+  console.log(name);
+  if(id == 0){
+    let sql='INSERT INTO employees(name,account,phoneNumber,place, status) VALUES ("'+name+'",'+'"'+"aA"+'",'+'"'+phoneNumber+'",'+'"'+place+'",'+status+')';
+    con.query(sql);
+  }
+  else{
+    let sql = 'UPDATE employees SET name="'+name+'",account="'+"Ae"+'",phoneNumber="'+phoneNumber+'",place="'+place+'", status='+status+' WHERE id='+id;
+    con.query(sql)
+  }
+  employeesAll = [];
+  con.query('select * from employees', function (err, rows, fields) {
+    if (err) throw err
+
+    rows.forEach(element => {
+      var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
+      employeesAll.push(x);
+    })
+  });
+  res.redirect('/nhan-vien');
+};
 
 router.get('/doi-mat-khau', function(req, res, next) {
   res.render('employee/changePassword',{title:'Đổi mật khẩu'})
