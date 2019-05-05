@@ -105,12 +105,12 @@
                                                     <td>
                                                         <% if(categories[i].status == "1"){ %>
                                                         <button
-                                                            onclick="changeStatus(<%=categories[i].id%>);return false;"
+                                                            onclick="location.href='gian-hang/chuyen-trang-thai/<%=categories[i].id%>'"
                                                             type="button" class="btn mr-1 mb-1 btn-danger btn-sm"><i
                                                                 class="fa fa-times"></i></button>
                                                         <% } else{%>
                                                         <button
-                                                            onclick="changeStatus(<%=categories[i].id%>);return false;"
+                                                            onclick="location.href='gian-hang/chuyen-trang-thai/<%=categories[i].id%>'"
                                                             type="button" class="btn mr-1 mb-1 btn-primary btn-sm"><i
                                                                 class="fa fa-check"></i></button>
                                                         <% }%>

@@ -12,9 +12,10 @@ var index = require('../controller/index');
 
 router.get('/gian-hang', category.list);
 router.post('/gian-hang/taomoi', category.create);
+router.get('/gian-hang/chuyen-trang-thai/:id', category.changeStatus);
 router.get('/nhan-vien', employee.list);
 router.post('/nhan-vien', employee.listp);
-router.post('/nhan-vien/change-status', employee.changeStatus);
+router.post('/nhan-vien/chuyen-trang-thai-id=?:id', employee.changeStatus);
 router.post('/nhan-vien/taomoi', employee.create);
 router.get('/khach-hang', customer.list);
 router.get('/san-pham', product.list);

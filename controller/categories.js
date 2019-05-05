@@ -57,4 +57,33 @@ router.create = (req, res, next) => {
   res.redirect('/gian-hang');
 };
 
+router.changeStatus = (req, res, next) => {
+  let id= req.params.id;
+  let x, r;
+  let sqlselect = "select * from categories where id="+id;
+  con.query(sqlselect, function(err, results, fields){
+    x = results[0].status;
+    if(x == 1){
+      r = 0;
+    }
+    else{
+      r = 1;
+    }
+    let sql = 'UPDATE categories SET status='+r+' WHERE id='+id;
+    console.log(sql);
+  con.query(sql);
+  });
+  
+  categoriesAll = [];
+  con.query('select * from categories', function (err, rows, fields) {
+    if (err) throw err
+
+    rows.forEach(element => {
+      var x = new category(element.id, element.name, element.status, element.description);
+      categoriesAll.push(x);
+    })
+  });
+  res.redirect('/gian-hang');
+}
+
 module.exports = router;
