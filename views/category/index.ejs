@@ -27,7 +27,8 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form>
+                                <form action="gian-hang/taomoi" method="POST">
+                                    <input type="hidden" class="form-control" placeholder="id" id="id" name="id">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-3">
@@ -35,7 +36,7 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" placeholder="Tên gian hàng"
-                                                    id="name">
+                                                    id="name" name="name">
                                             </div>
                                         </div>
                                     </div>
@@ -46,16 +47,17 @@
                                             </div>
                                             <div class="col-md-9">
                                                 <input type="text" class="form-control" placeholder="Mô tả"
-                                                    id="description">
+                                                    id="description" name="description">
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
-                                <button type="button" class="btn btn-primary">Lưu</button>
-                            </div>
+                               
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
+                            </form>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -65,28 +67,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="form-group row">
-                                    <form class="form form-horizontal" action="gian-hang" method='POST'>
-
-                                        <div class="col-md-2">
-                                            <select class="form-control input-sm" id="status" name="status"
-                                                name="status">
-                                                <option value="-1">Chọn trạng thái</option>
-                                                <option value="1">Đang hoạt động</option>
-                                                <option value="0">Đã ngưng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <input type="text" id="name" class="input-sm form-control"
-                                                placeholder="Tên gian hàng" name="name">
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-sm btn-primary">
-                                                <i class="ft-search"></i> Tìm kiếm
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control input-sm" id="myInput" onkeyup="myFunction()" placeholder="Tìm kiếm theo tên" title="Tìm kiếm theo tên">
+                                    </div>
                                     <div class="col-md-2">
                                         <button data-toggle="modal" data-target="#exampleModal"
                                             data-original-title="Sửa thông tin" type="button"
@@ -161,6 +144,7 @@
                 table.rows[i].onclick = function () {
                     // get the seected row index
                     rIndex = this.rowIndex;
+                    document.getElementById("id").value = this.cells[0].innerHTML;
                     document.getElementById("name").value = this.cells[1].innerHTML;
                     document.getElementById("description").value = this.cells[2].innerHTML;
                 };
@@ -169,6 +153,25 @@
         function changeStatus(id) {
             alert(id);
         }
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
+        }
+
     </script>
 </body>
 

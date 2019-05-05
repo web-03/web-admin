@@ -11,6 +11,7 @@ var index = require('../controller/index');
 
 
 router.get('/gian-hang', category.list);
+router.post('/gian-hang/taomoi', category.create);
 router.get('/nhan-vien', employee.list);
 router.post('/nhan-vien', employee.listp);
 router.post('/nhan-vien/change-status', employee.changeStatus);

@@ -1,39 +1,60 @@
 var express = require('express');
 var router = express.Router();
-var data = [
-  { id: '1', name: 'Giày', description: 'Giày tốt', status: '1' },
-  { id: '2', name: 'Dép', description: 'Hàng tốt', status: '1' },
-  { id: '3', name: 'Trang sức', description: 'Hàng đẹp', status: '0' },
-]
+var con = require('./../config/key');
+var router = express.Router();
 
+var category = function(id, name, status, description){
+  this.id = id;
+  this.name = name;
+  this.status = status;
+  this.description = description;
+}
+
+var categoriesAll = [];
+
+con.query('select * from categories', function (err, rows, fields) {
+  if (err) throw err
+
+  rows.forEach(element => {
+    var x = new category(element.id, element.name, element.status, element.description);
+    categoriesAll.push(x);
+  })
+});
 /* GET home page. */
 router.list = (req, res, next) => {
-  res.render('category/index', { categories: data });
+  let categories = [];
+  categories = categoriesAll;
+  res.render('category/index',{categories : categories});
 };
 
-router.post('/', function(req, res, next) {
+router.create = (req, res, next) => {
   let name = req.body.name;
-  let status = req.body.status;
-  let categories=[];
-  if(status!= "-1" || name != ""){
-    data.forEach(function(item){
-      if((item.status == status || status=="-1") && (item.name == name || name=="")){
-        categories.push(item);
-      }
-    });
+  let status = 1;
+  let id = req.body.id;
+  if(id==""){
+    id=0;
+  }
+  let description = req.body.description;
+  console.log(id);
+  console.log(name);
+  if(id == 0){
+    let sql='INSERT INTO categories(name, status, description) VALUES ("'+name+'",'+status+',"'+description+'")';
+    con.query(sql);
   }
   else{
-    categories = data;
+    let sql = 'UPDATE categories SET name="'+name+'", status='+status+',description="'+description+'" WHERE id='+id;
+    con.query(sql)
   }
-  res.render('category/index',{categories : categories})
-});
+  categoriesAll = [];
+  con.query('select * from categories', function (err, rows, fields) {
+    if (err) throw err
 
-router.get('/create', function (req, res, next) {
-  res.render('category/new', { title: 'Thêm gian hàng' })
-});
-
-router.get('/edit', function (req, res, next) {
-  res.render('category/edit', { title: 'Sửa giang hàng' })
-});
+    rows.forEach(element => {
+      var x = new category(element.id, element.name, element.status, element.description);
+      categoriesAll.push(x);
+    })
+  });
+  res.redirect('/gian-hang');
+};
 
 module.exports = router;
