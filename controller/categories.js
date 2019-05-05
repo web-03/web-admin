@@ -70,19 +70,19 @@ router.changeStatus = (req, res, next) => {
       r = 1;
     }
     let sql = 'UPDATE categories SET status='+r+' WHERE id='+id;
-    console.log(sql);
-  con.query(sql);
+    con.query(sql);
+    categoriesAll = [];
+    con.query('select * from categories', function (err, rows, fields) {
+      if (err) throw err
+
+      rows.forEach(element => {
+        var x = new category(element.id, element.name, element.status, element.description);
+        categoriesAll.push(x);
+      })
+    });
+    
   });
   
-  categoriesAll = [];
-  con.query('select * from categories', function (err, rows, fields) {
-    if (err) throw err
-
-    rows.forEach(element => {
-      var x = new category(element.id, element.name, element.status, element.description);
-      categoriesAll.push(x);
-    })
-  });
   res.redirect('/gian-hang');
 }
 
