@@ -1,4 +1,5 @@
 var express = require('express');
+var con = require('./../config/key');
 var router = express.Router();
 var categories = [
   { id: '1', name: 'Giày', description: 'Giày tốt', status: '1' },
@@ -12,9 +13,40 @@ var data = [
   { id: '3', name: 'Trang sức', description: 'Hàng đẹp', categoryId: '2',status: '0' },
 ]
 
+var product = function(id, name, description, categoryId, status){
+  this.id = id;
+  this.name = name;
+  this.categoryId = categoryId;
+  this.description = description;
+  this.status = status;
+}
+var categorie = function(id, name, description, status){
+  this.id = id;
+  this.name = name;
+  this.description = description;
+  this.status = status;
+}
+var productsAll = [];
+con.query('select * from products', function (err, rows, fields) {
+  if (err) throw err
+
+  rows.forEach(element => {
+    var x = new product(element.id, element.name, element.categoryId, element.description, element.status);
+    productsAll.push(x);
+  })
+});
+var categoriesAll = [];
+con.query('select * from categories', function (err, rows, fields) {
+  if (err) throw err
+
+  rows.forEach(element => {
+    var x = new categorie(element.id, element.name, element.description, element.status);
+    categoriesAll.push(x);
+  })
+});
 /* GET home page. */
 router.list = (req, res, next) => {
-  res.render('product/index',{products: data, categories: categories})
+  res.render('product/index',{products: productsAll, categories: categoriesAll})
 };
 
 router.post('/', function(req, res, next) {

@@ -13,6 +13,7 @@ var employee = function(id, name, account, phoneNumber, place, status){
 }
 
 var employeesAll = [];
+
 con.query('select * from employees', function (err, rows, fields) {
   if (err) throw err
 
