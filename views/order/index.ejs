@@ -48,10 +48,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>Id</th>
-                                                            <th>Tên sản phẩm</th>
-                                                            <th>Tên gian hàng</th>
-                                                            <th>Số lượng</th>
-                                                            <th>Đơn giá</th>
+                                                            <th>Mã đơn hàng</th>
+                                                            <th>Tên khách hàng</th>
+                                                            <th>Địa chỉ</th>
                                                             <th>Tổng tiền</th>
                                                             <th>Trạng thái</th>
                                                         </tr>
@@ -61,14 +60,14 @@
                                                             <% if(orders[i].status == "2"){ %>
                                                             <tr>
                                                                 <td><%= orders[i].id %></td>
-                                                                <td><%= orders[i].productName %></td>
-                                                                <td><%= orders[i].categoryName %></td>
-                                                                <td><%= orders[i].quantity %></td>
-                                                                <td><%= orders[i].unitPrice %></td>
-                                                                <td><%= orders[i].totalAmount %></td>
+                                                                <td><%= orders[i].orderName %></td>
+                                                                <td><%= orders[i].customerName %></td>
+                                                                <td><%= orders[i].address %></td>
+                                                                <td><%= orders[i].sumMoney %></td>
+                                                        
                                                                 <td>
                                                                     <div class="tag tag-success">Đã giao</div>
-                                                                   
+                                                                    
                                                                 </td>
                                                                  
                                                             </tr>
@@ -80,28 +79,29 @@
                                         <table id="delivering" class="table table-bordered mb-0" style="display:none;">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Tên gian hàng</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Đơn giá</th>
-                                                    <th>Tổng tiền</th>
-                                                    <th>Trạng thái</th>
+                                                        <th>Id</th>
+                                                            <th>Mã đơn hàng</th>
+                                                            <th>Tên khách hàng</th>
+                                                            <th>Địa chỉ</th>
+        
+                                                            <th>Tổng tiền</th>
+                                                            <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <% for(var i=0; i< orders.length; i++){ %>
                                                     <% if(orders[i].status == "1"){ %>
                                                     <tr>
-                                                        <td><%= orders[i].id %></td>
-                                                        <td><%= orders[i].productName %></td>
-                                                        <td><%= orders[i].categoryName %></td>
-                                                        <td><%= orders[i].quantity %></td>
-                                                        <td><%= orders[i].unitPrice %></td>
-                                                        <td><%= orders[i].totalAmount %></td>
+                                                            <td><%= orders[i].id %></td>
+                                                            <td><%= orders[i].orderName %></td>
+                                                            <td><%= orders[i].customerName %></td>
+                                                            <td><%= orders[i].address %></td>
+                                                            <td><%= orders[i].sumMoney %></td>
                                                         <td>
-                                                            <div class="tag tag-primary">Đang giao</div>
-                                                           
+                                                            <!-- <div class="tag tag-primary">Đang giao</div> -->
+                                                            <button
+                                                            onclick="location.href='don-hang/chuyen-trang-thai/<%=orders[i].id%>'"
+                                                            type="button" class="tag tag-primary">Đang giao</button>
                                                         </td>
                                                          
                                                     </tr>
@@ -113,28 +113,29 @@
                                         <table id="just" class="table table-bordered mb-0" style="display:none;">
                                             <thead>
                                                 <tr>
-                                                    <th>Id</th>
-                                                    <th>Tên sản phẩm</th>
-                                                    <th>Tên gian hàng</th>
-                                                    <th>Số lượng</th>
-                                                    <th>Đơn giá</th>
-                                                    <th>Tổng tiền</th>
-                                                    <th>Trạng thái</th>
+                                                        <th>Id</th>
+                                                            <th>Mã đơn hàng</th>
+                                                            <th>Tên khách hàng</th>
+                                                            <th>Địa chỉ</th>
+        
+                                                            <th>Tổng tiền</th>
+                                                            <th>Trạng thái</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <% for(var i=0; i< orders.length; i++){ %>
                                                     <% if(orders[i].status == "0"){ %>
                                                     <tr>
-                                                        <td><%= orders[i].id %></td>
-                                                        <td><%= orders[i].productName %></td>
-                                                        <td><%= orders[i].categoryName %></td>
-                                                        <td><%= orders[i].quantity %></td>
-                                                        <td><%= orders[i].unitPrice %></td>
-                                                        <td><%= orders[i].totalAmount %></td>
+                                                            <td><%= orders[i].id %></td>
+                                                            <td><%= orders[i].orderName %></td>
+                                                            <td><%= orders[i].customerName %></td>
+                                                            <td><%= orders[i].address %></td>
+                                                            <td><%= orders[i].sumMoney %></td>
                                                         <td>
-                                                            <div class="tag tag-warning">Chưa giao</div>
-                                                           
+                                                            <!-- <div class="tag tag-warning">Chưa giao</div> -->
+                                                            <button
+                                                            onclick="location.href='don-hang/chuyen-trang-thai/<%=orders[i].id%>'"
+                                                            type="button" class="tag tag-warning">Chưa giao</button>
                                                         </td>
                                                          
                                                     </tr>

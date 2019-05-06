@@ -23,30 +23,20 @@
                                 <div class="form-group row">
                                     <form class="form form-horizontal" action="/khach-hang" method='POST'>
 
-                                        <div class="col-md-2">
-                                            <select class="form-control input-sm" id="status" name="status" name="status">
-                                                <option value="-1">Chọn trạng thái</option>
-                                                <option value="1">Đang hoạt động</option>
-                                                <option value="0">Đã ngưng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <input type="text" id="name" class="input-sm form-control"
-                                                placeholder="Tên khách hàng" name="name">
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-sm btn-primary">
-                                                <i class="ft-search"></i> Tìm kiếm
-                                            </button>
-                                        </div>
+                                       
                                     </form>
+                                    <div class="col-md-2">
+                                            <!-- <input type="text" id="name" class="input-sm form-control"
+                                                placeholder="Tên khách hàng" name="name"> -->
+                                                <input type="text" class="form-control input-sm" id="myInput" onkeyup="myFunction()" placeholder="Tìm kiếm theo tên" title="Tìm kiếm theo tên">
+                                        </div>
                                 </div>
+                                
                                 <hr>
+
                                 <div class="card-body collapse in">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered mb-0">
+                                        <table id="table" class="table table-bordered mb-0">
                                             <thead>
                                                 <tr>
                                                     <th>Id</th>
@@ -74,12 +64,12 @@
                                                             <td>
                                                                 <% if(customers[i].status == "1"){ %>
                                                                 <button
-                                                                    onclick="changeStatus(<%=customers[i].id%>);return false;"
+                                                                    onclick="location.href='khach-hang/chuyen-trang-thai/<%=customers[i].id%>'"
                                                                     type="button" class="btn mr-1 mb-1 btn-danger btn-sm"><i
                                                                         class="fa fa-times"></i></button>
                                                                 <% } else{%>
                                                                 <button
-                                                                    onclick="changeStatus(<%=customers[i].id%>);return false;"
+                                                                    onclick="location.href='khach-hang/chuyen-trang-thai/<%=customers[i].id%>'"
                                                                     type="button" class="btn mr-1 mb-1 btn-primary btn-sm"><i
                                                                         class="fa fa-check"></i></button>
                                                                 <% }%>
@@ -102,6 +92,24 @@
     <script>
         function changeStatus(id){
             alert(id);
+        }
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[2];
+                if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+                }       
+            }
         }
     </script>
 

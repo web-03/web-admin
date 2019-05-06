@@ -76,7 +76,8 @@ router.create = (req, res, next) => {
   console.log(id);
   console.log(name);
   if(id == 0){
-    let sql='INSERT INTO employees(name,account,phoneNumber,place, status) VALUES ("'+name+'",'+'"'+"aA"+'",'+'"'+phoneNumber+'",'+'"'+place+'",'+status+')';
+    // let sql='INSERT INTO categories(name,description,status) VALUES ("123" , "456",1)';
+    let sql='INSERT INTO employees(name,account,phoneNumber,place, status) VALUES ( "'+name+'" , '+' "'+ "aA" +' " , '+' "'+phoneNumber+'",'+'"'+place+'",'+status+')';
     con.query(sql);
   }
   else{
