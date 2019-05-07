@@ -8,13 +8,14 @@ var data = [
   { id: '3', productName: 'Vòng tay', categoryName: 'Trang sức', quantity: '5', unitPrice : '50000', totalAmount:'250000', status: '0' },
 ]
 
-var order = function(id, address , customerName, orderName, sumMoney, status){
+var order = function(id, address , customerName, orderName, sumMoney, status, create){
   this.id = id;
   this.address = address;
   this.customerName = customerName;
   this.orderName = orderName;
   this.sumMoney = sumMoney;
   this.status = status;
+  this.create = create;
 }
 var ordersAll = [];
 con.query('select * from orders', function (err, rows, fields) {
