@@ -51,9 +51,9 @@ router.changeStatus = (req, res, next) => {
     employeesAll = [];
     con.query('select * from employees', function (err, rows, fields) {
       if (err) throw err
-
+    
       rows.forEach(element => {
-        var x = new new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
+        var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
         employeesAll.push(x);
       })
     });

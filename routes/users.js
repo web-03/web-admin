@@ -15,7 +15,7 @@ router.post('/gian-hang/taomoi', category.create);
 router.get('/gian-hang/chuyen-trang-thai/:id', category.changeStatus);
 router.get('/nhan-vien', employee.list);
 router.post('/nhan-vien', employee.listp);
-router.post('/nhan-vien/chuyen-trang-thai/:id', employee.changeStatus);
+router.get('/nhan-vien/chuyen-trang-thai/:id', employee.changeStatus);
 router.post('/nhan-vien/taomoi', employee.create);
 router.get('/khach-hang', customer.list);
 router.get('/khach-hang/chuyen-trang-thai/:id', customer.changeStatus);
