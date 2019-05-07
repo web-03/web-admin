@@ -23,7 +23,7 @@ var reportYear = function(create, total){
   this.total;
 }
 
-con.query('SELECT created_at, SUM(sum_money) AS '+'total'+' FROM `orders` GROUP BY created_at HAVING created_at BETWEEN "'+'2019-05-06'+'" AND "'+'2019-05-07'+'"', function (err, rows, fields) {
+con.query('SELECT created_at, SUM(sum_money) AS total FROM `orders` GROUP BY created_at HAVING created_at BETWEEN "'+'2019-05-06'+'" AND "'+'2019-05-07'+'"', function (err, rows, fields) {
   if (err) throw err
 
   rows.forEach(element => {
