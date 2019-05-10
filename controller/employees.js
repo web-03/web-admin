@@ -24,9 +24,19 @@ con.query('select * from employees', function (err, rows, fields) {
 });
 /* GET home page. */
 router.list = (req, res, next) => {
-  let employees =[];
-  employees = employeesAll;
-  res.render('employee/index',{employees : employees});
+  
+  con.query('select * from employees', function (err, rows, fields) {
+    if (err) throw err
+    let employees =[];
+    employeesAll=[];
+    rows.forEach(element => {
+      var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
+      employeesAll.push(x);
+    });
+    employees = employeesAll;
+    res.render('employee/index',{employees : employees});
+  });
+  
 };
 
 router.listp = (req, res, next) => {
@@ -57,10 +67,10 @@ router.changeStatus = (req, res, next) => {
         employeesAll.push(x);
       })
     });
+    res.redirect('/nhan-vien');
     
   });
   
-  res.redirect('/nhan-vien');
 };
 
 
@@ -109,9 +119,9 @@ router.create = (req, res, next) => {
     rows.forEach(element => {
       var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
       employeesAll.push(x);
-    })
+    });
+    res.redirect('/nhan-vien');
   });
-  res.redirect('/nhan-vien');
 };
 
 router.get('/doi-mat-khau', function(req, res, next) {

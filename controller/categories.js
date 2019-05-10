@@ -52,9 +52,10 @@ router.create = (req, res, next) => {
     rows.forEach(element => {
       var x = new category(element.id, element.name, element.status, element.description);
       categoriesAll.push(x);
-    })
+    });
+    res.redirect('/gian-hang');
   });
-  res.redirect('/gian-hang');
+ 
 };
 
 router.changeStatus = (req, res, next) => {
@@ -78,12 +79,11 @@ router.changeStatus = (req, res, next) => {
       rows.forEach(element => {
         var x = new category(element.id, element.name, element.status, element.description);
         categoriesAll.push(x);
-      })
+      });
+      res.redirect('/gian-hang');
     });
     
   });
-  
-  res.redirect('/gian-hang');
 }
 
 module.exports = router;
