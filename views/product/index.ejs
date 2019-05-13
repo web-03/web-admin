@@ -21,13 +21,13 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin gian hàng</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin sản phẩm</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form action="san-pham/taomoi" method="POST">
+                                <form action="san-pham/taomoi" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" class="form-control" placeholder="id" id="id" name="id">
                                     <div class="form-group">
                                         <div class="row">
@@ -88,6 +88,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="recipient-name" class="col-form-label">Hình ảnh:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="file" class="form-control" placeholder="Số lượng"
+                                                    id="image" name="image">
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                                             <button type="submit" class="btn btn-primary">Lưu</button>
@@ -135,6 +146,7 @@
                                                         <tr>
                                                             <th>Id</th>
                                                             <th>Tên</th>
+                                                            <th>Hình ảnh</th>
                                                             <th>Giá</th>
                                                             <th>Số lượng</th>
                                                             <th>Mô tả</th>
@@ -149,6 +161,7 @@
                                                     <tr>
                                                         <td><%= products[i].id %></td>
                                                         <td><%= products[i].name %></td>
+                                                        <td><img width="80" height="80" src=<%= products[i].image %>></td>
                                                         <td><%= products[i].price %></td>
                                                         <td><%= products[i].quantity %></td>
                                                         <td><%= products[i].description %></td>
@@ -207,9 +220,9 @@
                         rIndex = this.rowIndex;
                         document.getElementById("id").value = this.cells[0].innerHTML;
                     document.getElementById("name").value = this.cells[1].innerHTML;
-                    document.getElementById("price").value = this.cells[2].innerHTML;
-                    document.getElementById("quantity").value = this.cells[3].innerHTML;
-                    document.getElementById("description").value = this.cells[4].innerHTML;
+                    document.getElementById("price").value = this.cells[3].innerHTML;
+                    document.getElementById("quantity").value = this.cells[4].innerHTML;
+                    document.getElementById("description").value = this.cells[5].innerHTML;
                     };
                 }
             });
