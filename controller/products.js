@@ -67,10 +67,10 @@ con.query('select * from categories', function (err, rows, fields) {
 });
 /* GET home page. */
 router.list = (req, res, next) => {
-  productsAll=[];
+  
   con.query('select * from products', function (err, rows, fields) {
     if (err) throw err
-  
+    productsAll=[];
     rows.forEach(element => {
       var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
       productsAll.push(x);
@@ -135,10 +135,9 @@ router.create = (req,res,next)=>{
             con.query(sql);
           }
         }
-        productsAll = [];
         con.query('select * from products', function (err, rows, fields) {
           if (err) throw err
-
+          productsAll = [];
           rows.forEach(element => {
             var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
             productsAll.push(x);
@@ -165,15 +164,14 @@ router.changeStatus = (req, res, next) => {
     }
     let sql = 'UPDATE products SET status='+r+' WHERE id='+id;
     con.query(sql);
-    productsAll = [];
-  con.query('select * from products', function (err, rows, fields) {
-    if (err) throw err
-  
-    rows.forEach(element => {
-      var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
-      productsAll.push(x);
-    })
-  });
+    con.query('select * from products', function (err, rows, fields) {
+      if (err) throw err
+      productsAll = [];
+      rows.forEach(element => {
+        var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
+        productsAll.push(x);
+      })
+    });
     
   });
   
