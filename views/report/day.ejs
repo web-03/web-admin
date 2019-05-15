@@ -293,37 +293,15 @@
 																					</tr>
 																				</thead>
 																				<tbody>
+																					<% for(var i=0; i< reportDays.length; i++){ %>
+																						<tr>
+																							<td><%= reportDays[i].create %></td>
+																							<td><%= reportDays[i].total %> vnđ</td>
+																						</tr>
+																					<%}%>
 																					<tr>
-																						<td>04/04/2019</td>
-																						<td>2970000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>03/04/2019</td>
-																						<td>1260000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>13/04/2019</td>
-																						<td>750000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>15/04/2019</td>
-																						<td>182000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>16/04/2019</td>
-																						<td>1200000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>17/04/2019</td>
-																						<td>2970000vnđ</td>
-																					</tr>
-																					<tr>
-																						<td>17/04/2019</td>
-																						<td>2970000vnđ</td>
-																					</tr>
-																					<tr>
-																							<td><strong>Tổng cộng</strong></td>
-																						<td><strong>102970000vnđ</strong></td>
+																						<td><strong>Tổng cộng</strong></td>
+																						<td><strong><%= totalAmount %> vnđ</strong></td>
 																					</tr>
 																				</tbody>
 																			</table>
@@ -615,19 +593,10 @@
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
 				['Report', 'Doanh Thu'],
-				['04/04/2019', 5070000.0],
-
-				['03/04/2019', 1950000.0],
-
-				['13/04/2019', 1280000.0],
-
-				['15/04/2019', 5260000.0],
-
-				['16/04/2019', 2360000.0],
-
-				['17/04/2019', 4560000.0],
-
-				['18/04/2019', 1000000.0],
+				<% for(var i=0; i< reportDays.length; i++){ %>
+					['<%=reportDays[i].create%>',<%=reportDays[i].total%>],
+				<%}%>
+				
 			]);
 			// Set chart options
 			var options = {
