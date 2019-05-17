@@ -64,7 +64,7 @@
 										<li class="nav-item"><a class="nav-link" id="base-tab33" data-toggle="tab"
 												aria-controls="tab33" href="#tab33" aria-expanded="false">THỐNG KÊ
 												QUÝ 3</a></li>
-										<li class="nav-item"><a class="nav-link active" id="base-tab34" data-toggle="tab"
+										<li class="nav-item"><a class="nav-link" id="base-tab34" data-toggle="tab"
 												aria-controls="tab34" href="#tab34" aria-expanded="false">THỐNG KÊ
 												QUÝ 4</a></li>
 									</ul>
@@ -351,8 +351,7 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	<script type="text/javascript">
-
-
+	
 		// Load the Visualization API and the piechart package.
 		google.load('visualization', '1.0', {
 			'packages': ['corechart']
@@ -380,14 +379,14 @@
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
+				['Report', 'Doanh thu quý 1'],
 				<% for(var i=0; i< reportQuarter1.length; i++){ %>
 					['<%=reportQuarter1[i].create%>',<%=reportQuarter1[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				'title': 'Báo Cáo Doanh thu Theo Ngày',
+				'title': 'Báo Cáo Doanh thu quý 1',
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -414,14 +413,14 @@
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
+				['Report', 'Doanh thu quý 2'],
 				<% for(var i=0; i< reportQuarter2.length; i++){ %>
 					['<%=reportQuarter2[i].create%>',<%=reportQuarter2[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Thống kê Doanh thu trong Tuần",
+				title: "Báo cáo Doanh thu quý 2",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -445,14 +444,14 @@
 		function drawMonthReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
+				['Report', 'Doanh thu quý 3'],
 				<% for(var i=0; i< reportQuarter3.length; i++){ %>
 					['<%=reportQuarter3[i].create%>',<%=reportQuarter3[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Báo Cáo Doanh Thu Tháng",
+				title: "Báo Cáo Doanh thu quý 3",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -473,14 +472,14 @@
 		function drawYearReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
+				['Report', 'Doanh thu quý 4'],
 				<% for(var i=0; i< reportQuarter4.length; i++){ %>
 					['<%=reportQuarter4[i].create%>',<%=reportQuarter4[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Báo Cáo Doanh Thu Năm",
+				title: "Báo Cáo Doanh Thu Doanh thu quý 4",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
