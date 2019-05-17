@@ -24,17 +24,13 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="revenue-day"
+									<form class="form form-horizontal" action="/thong-ke-bao-cao/ngay"
 										method='GET'>
 										<div class="form-group col-md-4">
 											<label>Ngày</label>
 											<input type="date" id="from" class="form-control" name="from">
 										</div>
-										<div class="form-group col-md-4">
-											<label>Đến ngày</label>
-											<input type="date" id="to" class="form-control" name="to">
-										</div>
-
+										
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
 											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
@@ -58,12 +54,9 @@
 										<li class="nav-item"><a class="nav-link active" id="base-tab31"
 												data-toggle="tab" aria-controls="tab31" href="#tab31"
 												aria-expanded="true">THỐNG KÊ NGÀY</a></li>
-										<li class="nav-item"><a class="nav-link" id="base-tab32" data-toggle="tab"
-												aria-controls="tab32" href="#tab32" aria-expanded="false">THỐNG KÊ
-												TUẦN</a></li>
-										
 
 									</ul>
+									<h2>Doanh thu trong ngày <strong><%=to%></strong></h2>
 									<div class="tab-content px-1 pt-1">
 										<!-- ========= form tab 1 ======== -->
 

@@ -26,21 +26,34 @@ var reportYear = function (create, total) {
 
 /* GET home page. */
 router.day = (req, res, next) => {
-  let a = new Date();
-  let fromDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getUTCDate();
-  let toDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getDate();
-
+  
+  let to = req.query.from;
+  console.log(to);
+  let fromDay="";
+  if(to == undefined){
+    let a = new Date();
+    fromDay = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+  }
+  else{
+    let tday = new Date(to);
+    fromDay = (1900 + tday.getYear()) + '-' + (tday.getMonth()+1) + '-' + tday.getUTCDate();
+  }
+  console.log(fromDay);
   let reportDays = [];
   let totalAmount = 0;
-  con.query('SELECT HOUR(created_at) AS orderDay, SUM(sum_money) AS total FROM `orders` WHERE created_at BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY HOUR(created_at)', function (err, rows, fields) {
+  con.query('SELECT HOUR(created_at) AS orderDay, SUM(sum_money) AS total FROM `orders` WHERE Date(created_at) ="'+fromDay+'" GROUP BY HOUR(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.orderDay, element.total);
       reportDays.push(x);
       totalAmount += x.total;
     });
+    if(totalAmount == 0){
+      var x = new reportDay(0, 0);
+      reportDays.push(x);
+    }
     console.log(reportDays);
-    res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount });
+    res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount, to : to });
   });
 };
 
