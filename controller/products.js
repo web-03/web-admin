@@ -101,15 +101,20 @@ router.create = (req,res,next)=>{
     if(err){
       console.log(err);
     } else {
-      if(req.file == undefined){
-        console.log("err");
-      } else {
+      let file = req.file;
+      let fileName="";
+      if(file == undefined){
+        fileName="";
+      } 
+      else{
+        fileName = file.filename;
+      }
         let name = req.body.name;
         let categoryId = req.body.categoryId;
         let id = req.body.id;
         let price =req.body.price;
         let quantity = req.body.quantity;
-        let file = req.file;
+        
         console.log(file);
         let status = 1;
         if(id==""){
@@ -118,7 +123,7 @@ router.create = (req,res,next)=>{
         let description = req.body.description;
         console.log(id);
         console.log(name);
-        let linkImage = "https://shopping-web-admin.herokuapp.com/uploads/"+file.filename;
+        let linkImage = "https://shopping-web-admin.herokuapp.com/uploads/"+fileName;
         console.log(linkImage);
         if(id == 0){
           
@@ -145,7 +150,6 @@ router.create = (req,res,next)=>{
         });
           res.redirect('/san-pham');
       }
-    }
   });
   
 }
