@@ -2,23 +2,23 @@ var express = require('express');
 var con = require('./../config/key');
 var router = express.Router();
 
-var reportDay = function(create, total){
+var reportDay = function (create, total) {
   this.create = create;
   this.total = total;
 }
-var reportWeek = function(create, total){
+var reportWeek = function (create, total) {
   this.create = create;
   this.total = total;
 }
-var reportMonth = function(create, total){
+var reportMonth = function (create, total) {
   this.create = create;
   this.total = total;
 }
-var reportQuarter = function(create, total){
+var reportQuarter = function (create, total) {
   this.create = create;
   this.total = total;
 }
-var reportYear = function(create, total){
+var reportYear = function (create, total) {
   this.create = create;
   this.total = total;
 }
@@ -27,11 +27,11 @@ var reportYear = function(create, total){
 /* GET home page. */
 router.day = (req, res, next) => {
   let a = new Date();
-  let fromDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getUTCDate();
-  let toDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getDate();
-  
+  let fromDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getUTCDate();
+  let toDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getDate();
+
   let reportDays = [];
-  let totalAmount=0;
+  let totalAmount = 0;
   con.query('SELECT HOUR(created_at) AS orderDay, SUM(sum_money) AS total FROM `orders` WHERE created_at BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY HOUR(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
@@ -40,17 +40,17 @@ router.day = (req, res, next) => {
       totalAmount += x.total;
     });
     console.log(reportDays);
-    res.render('report/day',{reportDays: reportDays, totalAmount:totalAmount});
+    res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount });
   });
 };
 
 router.week = (req, res, next) => {
   let reportDays = [];
-  let totalAmount=0;
+  let totalAmount = 0;
   con.query('SELECT WEEKDAY(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE created_at BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY WEEKDAY(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
-      switch(element.orderDay){
+      switch (element.orderDay) {
         case 0:
           var x = new reportDay('Thứ 2', element.total);
           reportDays.push(x);
@@ -91,64 +91,189 @@ router.week = (req, res, next) => {
       }
     });
     console.log(reportDays);
-    res.render('report/week',{reportDays: reportDays, totalAmount:totalAmount});
+    res.render('report/week', { reportDays: reportDays, totalAmount: totalAmount });
   });
 };
 
 router.month = (req, res, next) => {
   let a = new Date();
-  let fromDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getUTCDate();
-  let toDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getDate();
+  let fromDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getUTCDate();
+  let toDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getDate();
   console.log(fromDay);
   console.log(toDay);
   let reportDays = [];
-  let totalAmount=0;
+  let totalAmount = 0;
   con.query('SELECT DATE(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE Date(created_at) BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY DATE(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
-      var x = new reportDay(element.orderDay.getDate()+'-'+(element.orderDay.getMonth()+1)+'-'+(1900+element.orderDay.getYear()), element.total);
+      var x = new reportDay(element.orderDay.getDate() + '-' + (element.orderDay.getMonth() + 1) + '-' + (1900 + element.orderDay.getYear()), element.total);
       reportDays.push(x);
       totalAmount += x.total;
     });
-    res.render('report/month',{reportDays: reportDays, totalAmount:totalAmount});
+    res.render('report/month', { reportDays: reportDays, totalAmount: totalAmount });
   });
 };
 
 router.quarter = (req, res, next) => {
   let a = new Date();
-  let fromDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getUTCDate();
-  let toDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getDate();
-  console.log(fromDay);
-  console.log(toDay);
-  let reportDays = [];
-  let totalAmount=0;
-  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="'+(1900+a.getYear())+'"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
+  let reportQuarter1 = [], reportQuarter2 = [], reportQuarter3 = [], reportQuarter4 = [];
+  let totalAmount1 = 0, totalAmount2 = 0, totalAmount3 = 0, totalAmount4 = 0;
+  for (d = 0; d < 3; d++) {
+    let r1 = new reportDay(('Tháng ' + (d + 1)), 0);
+    let r2 = new reportDay(('Tháng ' + (d + 4)), 0);
+    let r3 = new reportDay(('Tháng ' + (d + 7)), 0);
+    let r4 = new reportDay(('Tháng ' + (d + 10)), 0);
+    reportQuarter1.push(r1);
+    reportQuarter2.push(r2);
+    reportQuarter3.push(r3);
+    reportQuarter4.push(r4);
+  }
+  
+  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="' + (1900 + a.getYear()) + '"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
-      var x = new reportDay(('Tháng ' + element.orderDay), element.total);
-      reportDays.push(x);
-      totalAmount += x.total;
+      switch (element.orderDay) {
+        case 1:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter1[0] = x;
+          totalAmount1 += x.total;
+          break;
+        case 2:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter1[1] = x;
+          totalAmount1 += x.total;
+          break;
+        case 3:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter1[2] = x;
+          totalAmount1 += x.total;
+          break;
+        case 4:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter2[0] = x;
+          totalAmount2 += x.total;
+          break;
+        case 5:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter2[1] = x;
+          totalAmount2 += x.total;
+          break;
+        case 6:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter2[2] = x;
+          totalAmount2 += x.total;
+          break;
+        case 7:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter3[9] = x;
+          totalAmount3 += x.total;
+          break;
+        case 8:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter3[1] = x;
+          totalAmount3 += x.total;
+          break;
+        case 9:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter3[2] = x;
+          totalAmount3 += x.total;
+          break;
+        case 10:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter4[0] = x;
+          totalAmount4 += x.total;
+          break;
+        case 11:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter4[1] = x;
+          totalAmount4 += x.total;
+          break;
+        case 12:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportQuarter4[2] = x;
+          totalAmount4 += x.total;
+          break;
+      }
     });
-    res.render('report/quarter',{reportDays: reportDays, totalAmount:totalAmount});
+    res.render('report/quarter', { reportQuarter1: reportQuarter1, reportQuarter2: reportQuarter2, reportQuarter3: reportQuarter3, reportQuarter4: reportQuarter4, totalAmount1: totalAmount1, totalAmount2: totalAmount2, totalAmount3: totalAmount3, totalAmount4: totalAmount4 });
   });
 };
 
 router.year = (req, res, next) => {
   let a = new Date();
-  let fromDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getUTCDate();
-  let toDay = (1900+a.getYear())+'-'+a.getMonth() +'-'+a.getDate();
-  console.log(fromDay);
-  console.log(toDay);
   let reportDays = [];
-  let totalAmount=0;
-  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="'+(1900+a.getYear())+'"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
+  for (d = 0; d < 12; d++) {
+    let r = new reportDay(('Tháng ' + (d + 1)), 0);
+    reportDays.push(r);
+  }
+  let totalAmount = 0;
+  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="' + (1900 + a.getYear()) + '"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
-      var x = new reportDay(('Tháng ' + element.orderDay), element.total);
-      reportDays.push(x);
-      totalAmount += x.total;
+      switch (element.orderDay) {
+        case 1:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[0] = x;
+          totalAmount += x.total;
+          break;
+        case 2:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[1] = x;
+          totalAmount += x.total;
+          break;
+        case 3:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[2] = x;
+          totalAmount += x.total;
+          break;
+        case 4:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[3] = x;
+          totalAmount += x.total;
+          break;
+        case 5:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[4] = x;
+          totalAmount += x.total;
+          break;
+        case 6:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[5] = x;
+          totalAmount += x.total;
+          break;
+        case 7:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[6] = x;
+          totalAmount += x.total;
+          break;
+        case 8:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[7] = x;
+          totalAmount += x.total;
+          break;
+        case 9:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[8] = x;
+          totalAmount += x.total;
+          break;
+        case 10:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[9] = x;
+          totalAmount += x.total;
+          break;
+        case 11:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[10] = x;
+          totalAmount += x.total;
+          break;
+        case 12:
+          var x = new reportDay(('Tháng ' + element.orderDay), element.total);
+          reportDays[11] = x;
+          totalAmount += x.total;
+          break;
+      }
     });
-    res.render('report/year',{reportDays: reportDays, totalAmount:totalAmount});
+    res.render('report/year', { reportDays: reportDays, totalAmount: totalAmount });
   });
 };
 
