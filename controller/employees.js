@@ -1,40 +1,21 @@
 var express = require('express');
 var con = require('./../config/key');
+const employee = require('./../model/employee');
 var router = express.Router();
-
-
-var employee = function(id, name, account, phoneNumber, place, status){
-  this.id = id;
-  this.name = name;
-  this.account = account;
-  this.phoneNumber = phoneNumber;
-  this.place = place;
-  this.status = status;
-}
 
 var employeesAll = [];
 
-con.query('select * from employees', function (err, rows, fields) {
-  if (err) throw err
-
-  rows.forEach(element => {
-    var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
-    employeesAll.push(x);
-  })
-});
 /* GET home page. */
 router.list = (req, res, next) => {
   
   con.query('select * from employees', function (err, rows, fields) {
     if (err) throw err
-    let employees =[];
     employeesAll=[];
     rows.forEach(element => {
       var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
       employeesAll.push(x);
     });
-    employees = employeesAll;
-    res.render('employee/index',{employees : employees});
+    res.render('employee/index',{employees : employeesAll});
   });
   
 };
@@ -58,15 +39,6 @@ router.changeStatus = (req, res, next) => {
     }
     let sql = 'UPDATE employees SET status='+r+' WHERE id='+id;
     con.query(sql);
-    employeesAll = [];
-    con.query('select * from employees', function (err, rows, fields) {
-      if (err) throw err
-    
-      rows.forEach(element => {
-        var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
-        employeesAll.push(x);
-      })
-    });
     res.redirect('/nhan-vien');
     
   });
@@ -99,6 +71,7 @@ router.create = (req, res, next) => {
       console.log(newAccount);
       let sqlUpdate = 'UPDATE employees SET account="'+newAccount+'" WHERE id='+x;
       con.query(sqlUpdate);
+      res.redirect('/nhan-vien');
     });
     
   }
@@ -106,22 +79,16 @@ router.create = (req, res, next) => {
     if(password == ""){
       let sql = 'UPDATE employees SET name="'+name+'",phoneNumber="'+phoneNumber+'",place="'+place+'", status='+status+' WHERE id='+id;
       con.query(sql);
+      res.redirect('/nhan-vien');
     }
     else{
       let sql = 'UPDATE employees SET name="'+name+'",password="'+password+'",phoneNumber="'+phoneNumber+'",place="'+place+'", status='+status+' WHERE id='+id;
       con.query(sql);
+      res.redirect('/nhan-vien');
     }
   }
-  employeesAll = [];
-  con.query('select * from employees', function (err, rows, fields) {
-    if (err) throw err
-
-    rows.forEach(element => {
-      var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
-      employeesAll.push(x);
-    });
-    res.redirect('/nhan-vien');
-  });
+  
+  
 };
 
 router.get('/doi-mat-khau', function(req, res, next) {
@@ -132,12 +99,5 @@ router.post('/doi-mat-khau', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/create', function(req, res, next) {
-  res.render('employee/new',{title:'Thêm nhân viên'})
-});
-
-router.get('/edit', function(req, res, next) {
-  res.render('employee/edit',{title:'Sửa nhân viên'})
-});
 
 module.exports = router;

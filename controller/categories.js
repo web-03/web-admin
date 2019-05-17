@@ -1,30 +1,23 @@
 var express = require('express');
 var router = express.Router();
 var con = require('./../config/key');
+const category = require('./../model/category');
 var router = express.Router();
-
-var category = function(id, name, status, description){
-  this.id = id;
-  this.name = name;
-  this.status = status;
-  this.description = description;
-}
-
 var categoriesAll = [];
 
-con.query('select * from categories', function (err, rows, fields) {
-  if (err) throw err
-
-  rows.forEach(element => {
-    var x = new category(element.id, element.name, element.status, element.description);
-    categoriesAll.push(x);
-  })
-});
 /* GET home page. */
 router.list = (req, res, next) => {
-  let categories = [];
-  categories = categoriesAll;
-  res.render('category/index',{categories : categories});
+  categoriesAll = [];
+  con.query('select * from categories', function (err, rows, fields) {
+    if (err) throw err
+  
+    rows.forEach(element => {
+      var x = new category(element.id, element.name, element.status, element.description);
+      categoriesAll.push(x);
+    })
+    res.render('category/index',{categories : categoriesAll});
+  });
+  
 };
 
 router.create = (req, res, next) => {
@@ -40,22 +33,13 @@ router.create = (req, res, next) => {
   if(id == 0){
     let sql='INSERT INTO categories(name, status, description) VALUES ("'+name+'",'+status+',"'+description+'")';
     con.query(sql);
+    res.redirect('/gian-hang');
   }
   else{
     let sql = 'UPDATE categories SET name="'+name+'", status='+status+',description="'+description+'" WHERE id='+id;
-    con.query(sql)
-  }
-  categoriesAll = [];
-  con.query('select * from categories', function (err, rows, fields) {
-    if (err) throw err
-
-    rows.forEach(element => {
-      var x = new category(element.id, element.name, element.status, element.description);
-      categoriesAll.push(x);
-    });
+    con.query(sql);
     res.redirect('/gian-hang');
-  });
- 
+  }
 };
 
 router.changeStatus = (req, res, next) => {
@@ -72,16 +56,7 @@ router.changeStatus = (req, res, next) => {
     }
     let sql = 'UPDATE categories SET status='+r+' WHERE id='+id;
     con.query(sql);
-    categoriesAll = [];
-    con.query('select * from categories', function (err, rows, fields) {
-      if (err) throw err
-
-      rows.forEach(element => {
-        var x = new category(element.id, element.name, element.status, element.description);
-        categoriesAll.push(x);
-      });
-      res.redirect('/gian-hang');
-    });
+    res.redirect('/gian-hang');
     
   });
 }

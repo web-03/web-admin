@@ -2,6 +2,8 @@ var express = require('express');
 var con = require('./../config/key');
 const multer = require('multer');
 const path = require('path');
+const product = require('./../model/product');
+const category = require('./../model/category');
 var router = express.Router();
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -34,32 +36,10 @@ function checkFileType(file, cb){
     cb('Error: Images Only!');
   }
 }
-
-var product = function(id, name,price,quantity, description, image, categoryId, status){
-  this.id = id;
-  this.name = name;
-  this.price = price;
-  this.quantity = quantity;
-  this.description = description;
-  this.image = image;
-  this.categoryId = categoryId;
-  this.status = status;
-}
-
 var productsAll = [];
-
-var category = function(id, name, status, description){
-  this.id = id;
-  this.name = name;
-  this.status = status;
-  this.description = description;
-}
-
 var categoriesAll = [];
-
 con.query('select * from categories', function (err, rows, fields) {
   if (err) throw err
-
   rows.forEach(element => {
     var x = new category(element.id, element.name, element.status, element.description);
     categoriesAll.push(x);
@@ -79,22 +59,6 @@ router.list = (req, res, next) => {
   });
 };
 
-router.post('/', function(req, res, next) {
-  let name = req.body.name;
-  let status = req.body.status;
-  let products=[];
-  if(status!= "-1" || name != ""){
-    data.forEach(function(item){
-      if((item.status == status || status=="-1") && (item.name == name || name=="")){
-        products.push(item);
-      }
-    });
-  }
-  else{
-    products = data;
-  }
-  res.render('product/index',{products: products, categories: categories})
-});
 
 router.create = (req,res,next)=>{
   upload(req, res, (err) => {
@@ -174,22 +138,10 @@ router.changeStatus = (req, res, next) => {
       rows.forEach(element => {
         var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
         productsAll.push(x);
-      })
+      });
+      res.redirect('/san-pham');
     });
-    
   });
-  
-  res.redirect('/san-pham');
-  
-  
 }
-
-router.get('/create', function(req, res, next) {
-  res.render('product/new',{title:'Thêm sản phẩm'})
-});
-
-router.get('/edit', function(req, res, next) {
-  res.render('product/edit',{title:'Sửa sản phẩm'})
-});
 
 module.exports = router;

@@ -1,28 +1,7 @@
 var express = require('express');
 var con = require('./../config/key');
 var router = express.Router();
-
-var reportDay = function (create, total) {
-  this.create = create;
-  this.total = total;
-}
-var reportWeek = function (create, total) {
-  this.create = create;
-  this.total = total;
-}
-var reportMonth = function (create, total) {
-  this.create = create;
-  this.total = total;
-}
-var reportQuarter = function (create, total) {
-  this.create = create;
-  this.total = total;
-}
-var reportYear = function (create, total) {
-  this.create = create;
-  this.total = total;
-}
-
+const reportDay = require('./../model/report');
 
 /* GET home page. */
 router.day = (req, res, next) => {
