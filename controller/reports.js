@@ -99,21 +99,35 @@ router.week = (req, res, next) => {
 };
 
 router.month = (req, res, next) => {
+
+  let fromDay = "";
+  let toDay = "";
   let a = new Date();
-  let fromDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getUTCDate();
-  let toDay = (1900 + a.getYear()) + '-' + a.getMonth() + '-' + a.getDate();
-  console.log(fromDay);
-  console.log(toDay);
+  let month = req.query.month;
+  if(month == undefined){
+    
+    month = a.getMonth()+1;
+    fromDay = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + 1;
+    toDay = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + new Date((1990+a.getYear()), month, 0).getDate();
+  }
+  else{
+    fromDay = (1900 + a.getYear()) + '-' + month + '-' + 1;
+    toDay = (1900 + a.getYear()) + '-' + month + '-' + new Date((1990+a.getYear()), month, 0).getDate();
+  }
   let reportDays = [];
   let totalAmount = 0;
-  con.query('SELECT DATE(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE Date(created_at) BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY DATE(created_at)', function (err, rows, fields) {
+  con.query('SELECT DATE(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE Date(created_at) BETWEEN "'+fromDay+'" AND "'+toDay+'" GROUP BY DATE(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.orderDay.getDate() + '-' + (element.orderDay.getMonth() + 1) + '-' + (1900 + element.orderDay.getYear()), element.total);
       reportDays.push(x);
       totalAmount += x.total;
     });
-    res.render('report/month', { reportDays: reportDays, totalAmount: totalAmount });
+    if(totalAmount==0){
+      var x = new reportDay(1 + '-' + month + '-' + (1900 + a.getYear()), 0);
+      reportDays.push(x);
+    }
+    res.render('report/month', { reportDays: reportDays, totalAmount: totalAmount, month:month });
   });
 };
 
