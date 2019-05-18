@@ -12,6 +12,7 @@ router.day = (req, res, next) => {
   if(to == undefined){
     let a = new Date();
     fromDay = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+    to = a;
   }
   else{
     let tday = new Date(to);
@@ -192,14 +193,20 @@ router.quarter = (req, res, next) => {
 };
 
 router.year = (req, res, next) => {
-  let a = new Date();
+  let year = req.query.year;
+  console.log(year);
+  if(year == undefined){
+    let a = new Date();
+    year = (1900 + a.getYear());
+  }
+  console.log(year);
   let reportDays = [];
   for (d = 0; d < 12; d++) {
     let r = new reportDay(('Tháng ' + (d + 1)), 0);
     reportDays.push(r);
   }
   let totalAmount = 0;
-  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="' + (1900 + a.getYear()) + '"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
+  con.query('SELECT MONTH(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE YEAR(created_at)="' + year + '"  GROUP BY MONTH(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       switch (element.orderDay) {
@@ -265,7 +272,7 @@ router.year = (req, res, next) => {
           break;
       }
     });
-    res.render('report/year', { reportDays: reportDays, totalAmount: totalAmount });
+    res.render('report/year', { reportDays: reportDays, totalAmount: totalAmount, year: year });
   });
 };
 

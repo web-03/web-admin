@@ -24,16 +24,22 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="revenue-year"
+									<form id="formSearch" class="form form-horizontal" action="/thong-ke-bao-cao/nam"
 										method='GET'>
 										<div class="form-group col-md-4">
-											<label>Ngày</label>
-											<input type="date" id="from" class="form-control" name="from">
+											<label>Chọn năm</label>
+											<select id="year" class="select2 form-control" name="year">
+												<option value="<%= year %>"><%= year %>
+												
+												<% for(var i=2018; i< 2030; i++){ %>
+													<%if(i != year){%>
+														<option value="<%= i %>"><%= i %>
+														</option>s
+													<%}%>
+												<%}%>
+												</select>
 										</div>
-										<div class="form-group col-md-4">
-											<label>Đến ngày</label>
-											<input type="date" id="to" class="form-control" name="to">
-										</div>
+										
 
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
@@ -144,7 +150,6 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
 	<script type="text/javascript">
-
 
 		// Load the Visualization API and the piechart package.
 		google.load('visualization', '1.0', {
