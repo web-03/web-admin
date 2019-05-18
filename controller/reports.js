@@ -12,7 +12,17 @@ router.day = (req, res, next) => {
   if(to == undefined){
     let a = new Date();
     fromDay = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
-    to = a;
+    if(a.getMonth()<9){
+      if(a.getDate()<10){
+        to = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-0' + a.getDate();
+      }
+      else{
+        to = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-' + a.getDate();
+      }
+    }
+    else{
+      to = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+    }
   }
   else{
     let tday = new Date(to);
