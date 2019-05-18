@@ -24,17 +24,13 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="revenue-week"
+									<form id="formSearch" class="form form-horizontal" action="/thong-ke-bao-cao/tuan"
 										method='GET'>
 										<div class="form-group col-md-4">
 											<label>Ngày</label>
-											<input type="date" id="from" class="form-control" name="from">
+											<input type="date" id="from" value="<%=from%>" class="form-control" name="from">
 										</div>
-										<div class="form-group col-md-4">
-											<label>Đến ngày</label>
-											<input type="date" id="to" class="form-control" name="to">
-										</div>
-
+										
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
 											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
@@ -47,7 +43,7 @@
 						</div>
 					</div>
 				</div>
-
+				<h2>Doanh thu theo tuần từ ngày <strong><%=from%></strong> đến ngày <strong><%=to%></strong></h2>
 				<div class="row">
 					<div class="col-xl-12 col-lg-12">
 						<div class="card">

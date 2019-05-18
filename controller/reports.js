@@ -7,7 +7,7 @@ const reportDay = require('./../model/report');
 router.day = (req, res, next) => {
   
   let to = req.query.from;
-  console.log(to);
+  
   let fromDay="";
   if(to == undefined){
     let a = new Date();
@@ -28,7 +28,6 @@ router.day = (req, res, next) => {
     let tday = new Date(to);
     fromDay = (1900 + tday.getYear()) + '-' + (tday.getMonth()+1) + '-' + tday.getUTCDate();
   }
-  console.log(fromDay);
   let reportDays = [];
   let totalAmount = 0;
   con.query('SELECT HOUR(created_at) AS orderDay, SUM(sum_money) AS total FROM `orders` WHERE Date(created_at) ="'+fromDay+'" GROUP BY HOUR(created_at)', function (err, rows, fields) {
@@ -42,7 +41,6 @@ router.day = (req, res, next) => {
       var x = new reportDay(0, 0);
       reportDays.push(x);
     }
-    console.log(reportDays);
     res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount, to : to });
   });
 };
@@ -50,7 +48,44 @@ router.day = (req, res, next) => {
 router.week = (req, res, next) => {
   let reportDays = [];
   let totalAmount = 0;
-  con.query('SELECT WEEKDAY(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE created_at BETWEEN "2019-05-06" AND "2019-05-08" GROUP BY WEEKDAY(created_at)', function (err, rows, fields) {
+  let from = req.query.from;
+  let to="";
+  if(from == undefined){
+    let a = new Date();
+    //from = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+    let toDay = new Date(a.getFullYear(), (a.getMonth()), a.getDate() + 7);
+    to = (1900 + toDay.getYear()) + '-' + (toDay.getMonth()+1) + '-' + toDay.getDate();
+    if(a.getMonth()<9){
+      if(a.getDate()<10){
+        from = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-0' + a.getDate();
+      }
+      else{
+        from = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-' + a.getDate();
+      }
+    }
+    else{
+      from = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+    }
+  }
+  else{
+    let a = new Date(from);
+    let tday = new Date(a.getFullYear(), (a.getMonth()), a.getDate() + 7);
+    //from = (1900 + a.getYear()) + '-' + (a.getMonth()) + '-' + a.getDate();
+    if(a.getMonth()<9){
+      if(a.getDate()<10){
+        from = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-0' + a.getDate();
+      }
+      else{
+        from = (1900 + a.getYear()) + '-0' + (a.getMonth()+1) + '-' + a.getDate();
+      }
+    }
+    else{
+      from = (1900 + a.getYear()) + '-' + (a.getMonth()+1) + '-' + a.getDate();
+    }
+    to = (1900 + tday.getYear()) + '-' + (tday.getMonth()+1) + '-' + tday.getDate();
+  }
+  
+  con.query('SELECT WEEKDAY(created_at) as orderDay, SUM(sum_money) AS total FROM `orders` WHERE created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY WEEKDAY(created_at)', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       switch (element.orderDay) {
@@ -93,8 +128,8 @@ router.week = (req, res, next) => {
           break;
       }
     });
-    console.log(reportDays);
-    res.render('report/week', { reportDays: reportDays, totalAmount: totalAmount });
+    
+    res.render('report/week', { reportDays: reportDays, totalAmount: totalAmount, to:to, from:from });
   });
 };
 
