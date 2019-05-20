@@ -29,22 +29,12 @@ router.changeStatus = (req, res, next) => {
     else if(x==1){
       r = 2;
     }
+    res.redirect('/don-hang');
     
-    let sql = 'UPDATE orders SET status='+r+' WHERE id='+id;
-    con.query(sql);
-    ordersAll = [];
-    con.query('select * from orders', function (err, rows, fields) {
-      if (err) throw err
-    
-      rows.forEach(element => {
-        var x = new order(element.id, element.address, element.customer_name, element.order_name, element.sum_money, element.status);
-        ordersAll.push(x);
-      })
-    });
     
   });
   
-  res.redirect('/don-hang');
+ 
 }
 router.get('/completed', function(req, res, next) {
   res.render('order/completed',{title:'Đơn hàng đã giao'})
