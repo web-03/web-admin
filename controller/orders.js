@@ -17,6 +17,7 @@ router.list = (req, res, next) => {
     res.render('order/index',{orders :  ordersAll});
   });
 };
+
 router.changeStatus = (req, res, next) => {
   let id= req.params.id;
   let x, r;
@@ -29,23 +30,11 @@ router.changeStatus = (req, res, next) => {
     else if(x==1){
       r = 2;
     }
+    let sql = 'UPDATE orders SET status='+r+' WHERE id='+id;
+    con.query(sql);
     res.redirect('/don-hang');
-    
-    
   });
-  
- 
 }
-router.get('/completed', function(req, res, next) {
-  res.render('order/completed',{title:'Đơn hàng đã giao'})
-});
 
-router.get('/delivering', function(req, res, next) {
-  res.render('order/delivering',{title:'Đơn hàng đang giao'})
-});
-
-router.get('/watting', function(req, res, next) {
-  res.render('order/new',{title:'Đơn hàng chưa giao'})
-});
 
 module.exports = router;
