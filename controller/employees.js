@@ -90,14 +90,35 @@ router.create = (req, res, next) => {
   
   
 };
-
-router.get('/doi-mat-khau', function(req, res, next) {
-  res.render('employee/changePassword',{title:'Đổi mật khẩu'})
-});
-
-router.post('/doi-mat-khau', function(req, res, next) {
-  res.render('index');
-});
-
+router.changePassword = (req, res, next) => {
+  let account = req.query.account;
+  let sqlselect = "select * from employees where account="+account;
+  con.query(sqlselect, function(err, results, fields){
+    let x = results[0].account;
+    res.render('employee/changePassword',{x : x});
+    
+  });
+  
+};
+router.saveNewPassword = (req, res, next) => {
+  let account = req.query.account;
+  let password = req.query.account;
+  let x, r;
+  let sqlselect = "select * from employees where account="+account;
+  con.query(sqlselect, function(err, results, fields){
+    x = results[0].status;
+    if(x == 1){
+      r = 0;
+    }
+    else{
+      r = 1;
+    }
+    let sql = 'UPDATE employees SET password="'+password+'" WHERE account="'+account+'"';
+    con.query(sql);
+    res.redirect('/nhan-vien/doi-mat-khau');
+    
+  });
+  
+};
 
 module.exports = router;

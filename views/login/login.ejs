@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
+
+<head>
+    <title>Đổi mật khẩu</title>
+    <%  include ./../emlements/css %>
+    <style>
+        .error {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+        
+        .msg {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #31708f;
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+        }
+        </style>
+</head>
+<body>
+    <div class="app-content content container-fluid">
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <section class="flexbox-container">
+                    <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1 box-shadow-2 p-0">
+                        <div class="card border-grey border-lighten-3 m-0">
+                            <div class="card-header no-border">
+                                <div class="card-title text-xs-center">
+                                    <div class="p-1"><img src="/upload/image-1558090287776.jpg" alt="logo" width="75"></div>
+                                </div>
+                                <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span><strong>Đăng nhập hệ thống</strong></span></h6>
+                            </div>
+                            <div class="card-body collapse in">
+                                <div class="card-block pt-0">
+                                    <form class="form-horizontal" action="/login" ethod="POST">
+                                        <fieldset class="form-group floating-label-form-group">	
+                                            <label for="user-name"><strong>Tên đăng nhập</strong></label>
+                                            <input type="text" class="form-control" placeholder="Tên đăng nhập" name="username">
+                                        </fieldset>
+                                        <fieldset class="form-group floating-label-form-group mb-1">
+                                            <label for="user-password"><strong>Mật khẩu</strong></label>
+                                            <input type="password" class="form-control" placeholder="Mật khẩu" name="password">
+                                        </fieldset>
+                                        <fieldset class="form-group floating-label-form-group mb-1">
+                                            <span class="text-danger" style="display: none;">Tên đăng nhập hoặc mật khẩu không đúng</span>
+                                        </fieldset>
+                                        <fieldset class="form-group row">
+                                            <div class="col-md-6 col-xs-12 text-xs-center text-sm-left">
+                                                <fieldset>
+                                                    <input type="checkbox" id="remember-me" name="remember-me" class="chk-remember">
+                                                    <label for="remember-me"> Ghi nhớ đăng nhập</label>
+                                                </fieldset>
+                                            </div>
+                                            <div class="col-md-6 col-xs-12 float-sm-left text-xs-center text-sm-right"><a href="#" class="card-link">Quên mật khẩu</a></div>
+                                        </fieldset>
+                                        <button type="submit" class="btn btn-outline-primary btn-block"><i class="ft-unlock"></i> Đăng nhập</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <%  include ./../emlements/script %>
+</body>
