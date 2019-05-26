@@ -15,7 +15,7 @@ router.list = (req, res, next) => {
       var x = new category(element.id, element.name, element.status, element.description);
       categoriesAll.push(x);
     })
-    res.render('category/index',{categories : categoriesAll});
+    res.render('category/index',{categories : categoriesAll,user: req.user});
   });
   
 };
@@ -36,7 +36,7 @@ router.create = (req, res, next) => {
     res.redirect('/gian-hang');
   }
   else{
-    let sql = 'UPDATE categories SET name="'+name+'", status='+status+',description="'+description+'" WHERE id='+id;
+    let sql = 'UPDATE categories SET name=" '+name+'", status='+status+',description="'+description+'" WHERE id= '+id;
     con.query(sql);
     res.redirect('/gian-hang');
   }

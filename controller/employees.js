@@ -1,6 +1,7 @@
 var express = require('express');
 var con = require('./../config/key');
 const employee = require('./../model/employee');
+var bcrypt = require('bcrypt-nodejs');
 var router = express.Router();
 
 var employeesAll = [];
@@ -15,7 +16,7 @@ router.list = (req, res, next) => {
       var x = new employee(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
       employeesAll.push(x);
     });
-    res.render('employee/index',{employees : employeesAll});
+    res.render('employee/index',{employees : employeesAll,user: req.user});
   });
   
 };
@@ -55,7 +56,7 @@ router.create = (req, res, next) => {
   }
   let phoneNumber = req.body.phoneNumber;
   let place = req.body.place;
-  let password = req.body.password;
+  let password = bcrypt.hashSync(req.body.password, null, null);
   console.log(id);
   console.log(name);
   console.log(password);

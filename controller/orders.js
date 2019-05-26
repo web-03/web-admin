@@ -14,7 +14,7 @@ router.list = (req, res, next) => {
       var x = new order(element.id, element.address, element.customer_name, element.order_name, element.sum_money, element.status);
       ordersAll.push(x);
     });
-    res.render('order/index',{orders :  ordersAll});
+    res.render('order/index',{orders :  ordersAll,user: req.user});
   });
 };
 

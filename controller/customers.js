@@ -18,7 +18,7 @@ router.list = (req, res, next) => {
       var x = new customer(element.id, element.name, element.account, element.phoneNumber, element.place, element.status);
       customersAll.push(x);
     })
-    res.render('customer/index',{customers : customersAll})
+    res.render('customer/index',{customers : customersAll,user: req.user})
   });
   
 };

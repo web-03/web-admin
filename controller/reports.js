@@ -41,7 +41,7 @@ router.day = (req, res, next) => {
       var x = new reportDay(0, 0);
       reportDays.push(x);
     }
-    res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount, to : to });
+    res.render('report/day', { reportDays: reportDays, totalAmount: totalAmount, to : to ,user: req.user});
   });
 };
 
@@ -129,7 +129,7 @@ router.week = (req, res, next) => {
       }
     });
     
-    res.render('report/week', { reportDays: reportDays, totalAmount: totalAmount, to:to, from:from });
+    res.render('report/week', { reportDays: reportDays, totalAmount: totalAmount, to:to, from:from,user: req.user });
   });
 };
 
@@ -162,7 +162,7 @@ router.month = (req, res, next) => {
       var x = new reportDay(1 + '-' + month + '-' + (1900 + a.getYear()), 0);
       reportDays.push(x);
     }
-    res.render('report/month', { reportDays: reportDays, totalAmount: totalAmount, month:month });
+    res.render('report/month', { reportDays: reportDays, totalAmount: totalAmount, month:month ,user: req.user});
   });
 };
 
@@ -251,7 +251,7 @@ router.quarter = (req, res, next) => {
           break;
       }
     });
-    res.render('report/quarter', { reportQuarter1: reportQuarter1, reportQuarter2: reportQuarter2, reportQuarter3: reportQuarter3, reportQuarter4: reportQuarter4, totalAmount1: totalAmount1, totalAmount2: totalAmount2, totalAmount3: totalAmount3, totalAmount4: totalAmount4, year:year });
+    res.render('report/quarter', { reportQuarter1: reportQuarter1, reportQuarter2: reportQuarter2, reportQuarter3: reportQuarter3, reportQuarter4: reportQuarter4, totalAmount1: totalAmount1, totalAmount2: totalAmount2, totalAmount3: totalAmount3, totalAmount4: totalAmount4, year:year ,user: req.user});
   });
 };
 
@@ -333,7 +333,7 @@ router.year = (req, res, next) => {
           break;
       }
     });
-    res.render('report/year', { reportDays: reportDays, totalAmount: totalAmount, year: year });
+    res.render('report/year', { reportDays: reportDays, totalAmount: totalAmount, year: year ,user: req.user});
   });
 };
 

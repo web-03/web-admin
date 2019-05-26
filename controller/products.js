@@ -55,7 +55,7 @@ router.list = (req, res, next) => {
       var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
       productsAll.push(x);
     })
-    res.render('product/index',{products: productsAll, categories: categoriesAll})
+    res.render('product/index',{products: productsAll, categories: categoriesAll,user: req.user})
   });
 };
 

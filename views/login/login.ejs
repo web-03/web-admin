@@ -44,7 +44,10 @@
                             </div>
                             <div class="card-body collapse in">
                                 <div class="card-block pt-0">
-                                    <form class="form-horizontal" action="/login" ethod="POST">
+                                        <% if (message.length > 0) { %>
+                                            <div class="alert alert-danger"><%= message %></div>
+                                        <% } %>
+                                    <form class="form-horizontal" action="/login" method="POST">
                                         <fieldset class="form-group floating-label-form-group">	
                                             <label for="user-name"><strong>Tên đăng nhập</strong></label>
                                             <input type="text" class="form-control" placeholder="Tên đăng nhập" name="username">

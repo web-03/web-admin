@@ -160,8 +160,10 @@
             filter = input.value.toUpperCase();
             table = document.getElementById("table");
             tr = table.getElementsByTagName("tr");
+            console.log(tr);
             for (i = 0; i < tr.length; i++) {
                 td = tr[i].getElementsByTagName("td")[1];
+                console.log(td);
                 if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
