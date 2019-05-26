@@ -92,32 +92,28 @@ router.create = (req, res, next) => {
   
 };
 router.changePassword = (req, res, next) => {
-  let account = req.query.account;
-  let sqlselect = "select * from employees where account="+account;
-  con.query(sqlselect, function(err, results, fields){
-    let x = results[0].account;
-    res.render('employee/changePassword',{x : x});
-    
-  });
   
+    res.render('employee/changePassword',{msg:"" ,user: req.user});
+    
 };
 router.saveNewPassword = (req, res, next) => {
-  let account = req.query.account;
-  let password = req.query.account;
+  let account = req.user.account;
+  let oldPassword = bcrypt.hashSync(req.body.oldPassword, null, null);
+  let password = bcrypt.hashSync(req.body.newPassword, null, null);
+  console.log(oldPassword);
   let x, r;
-  let sqlselect = "select * from employees where account="+account;
+  let sqlselect = 'select * from employees where account="'+account+'"';
   con.query(sqlselect, function(err, results, fields){
-    x = results[0].status;
-    if(x == 1){
-      r = 0;
+    x = results[0].password;
+    console.log(x);
+    if(x == oldPassword){
+      let sql = 'UPDATE employees SET password="'+password+'" WHERE account="'+account+'"';
+      con.query(sql);
+      res.render('employee/changePassword',{user: req.user,msg: "Đổi mật khẩu thành công!"});
     }
     else{
-      r = 1;
+      res.render('employee/changePassword',{user: req.user,msg: "Mật khẩu cũ không chính xác!"});
     }
-    let sql = 'UPDATE employees SET password="'+password+'" WHERE account="'+account+'"';
-    con.query(sql);
-    res.redirect('/nhan-vien/doi-mat-khau');
-    
   });
   
 };
