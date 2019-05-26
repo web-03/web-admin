@@ -27,7 +27,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin nhân viên</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">Sửa thông tin nhân viên</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -92,33 +92,78 @@
                     </div>
                 </div>
 
+                <div class="modal fade" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Chi tiết nhân viên:</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="recipient-name" class="col-form-label">Tên:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Họ tên" id="dname"
+                                                    name="dname" required disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="recipient-name" class="col-form-label">Tài khoản:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Họ tên" id="daccount"
+                                                    name="daccount" required disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="message-text" class="col-form-label">Số điện thoại:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="number" class="form-control" placeholder="Số điện thoại"
+                                                    id="dphoneNumber" name="dphoneNumber" required  disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="message-text" class="col-form-label">Địa chỉ:</label>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Địa chỉ" id="dplace"
+                                                    name="dplace"  disabled="disabled">
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="card">
                             <div class="card-header">
                                 <div class="form-group row">
-                                    <!-- <form class="form form-horizontal" action="nhan-vien" method='POST'>
-
-                                        <div class="col-md-2">
-                                            <select class="form-control input-sm" id="status" name="status"
-                                                name="status">
-                                                <option value="-1">Chọn trạng thái</option>
-                                                <option value="1">Đang hoạt động</option>
-                                                <option value="0">Đã ngưng</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <input type="text" id="name" class="input-sm form-control"
-                                                placeholder="Tên nhân viên" name="name">
-                                        </div>
-
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-sm btn-primary">
-                                                <i class="ft-search"></i> Tìm kiếm
-                                            </button>
-                                        </div>
-                                    </form> -->
+                                    
                                     <div class="col-md-2">
                                         <input type="text" class="form-control input-sm" id="myInput"
                                             onkeyup="myFunction()" placeholder="Tìm kiếm theo tên"
@@ -145,6 +190,7 @@
                                                     <th>Trạng thái</th>
                                                     <th>Xóa</th>
                                                     <th>Sửa</th>
+                                                    <th>Xem chi tiết</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -174,11 +220,15 @@
                                                         <% }%>
                                                     </td>
                                                     <td>
-
                                                         <button data-toggle="modal" data-target="#exampleModal"
                                                             data-original-title="Sửa thông tin" type="button"
                                                             class="btn btn-icon btn-primary btn-sm show-tooltip abc"><i
                                                                 class="fa fa-pencil"></i></button>
+                                                    </td>
+                                                    <td>
+                                                        <button data-toggle="modal" data-target="#myModal"
+                                                            class="btn btn-icon btn-primary btn-sm show-tooltip detail-employee"><i
+                                                                class="fa fa-th"></i></button>
                                                     </td>
                                                 </tr>
                                                 <% }%>
@@ -206,6 +256,19 @@
                     document.getElementById("name").value = this.cells[1].innerHTML;
                     document.getElementById("phoneNumber").value = this.cells[3].innerHTML;
                     document.getElementById("place").value = this.cells[4].innerHTML;
+                };
+            }
+        });
+        
+        $(".detail-employee").click(function () {
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    // get the seected row index
+                    rIndex = this.rowIndex;
+                    document.getElementById("dname").value = this.cells[1].innerHTML;
+                    document.getElementById("daccount").value = this.cells[2].innerHTML;
+                    document.getElementById("dphoneNumber").value = this.cells[3].innerHTML;
+                    document.getElementById("dplace").value = this.cells[4].innerHTML;
                 };
             }
         });

@@ -33,6 +33,71 @@
                                 </div>
                                 
                                 <hr>
+                                <div class="modal fade" id="myModal" role="dialog">
+                                    <div class="modal-dialog">
+                                    
+                                      <!-- Modal content-->
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Chi tiết nhân viên:</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label for="recipient-name" class="col-form-label">Tên:</label>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" placeholder="Họ tên" id="dname"
+                                                                    name="dname" required disabled="disabled">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label for="recipient-name" class="col-form-label">Tài khoản:</label>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" placeholder="Họ tên" id="daccount"
+                                                                    name="daccount" required disabled="disabled">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label for="message-text" class="col-form-label">Số điện thoại:</label>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <input type="number" class="form-control" placeholder="Số điện thoại"
+                                                                    id="dphoneNumber" name="dphoneNumber" required  disabled="disabled">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <label for="message-text" class="col-form-label">Địa chỉ:</label>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                <input type="text" class="form-control" placeholder="Địa chỉ" id="dplace"
+                                                                    name="dplace"  disabled="disabled">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                      </div>
+                                      
+                                    </div>
+                                  </div>
 
                                 <div class="card-body collapse in">
                                     <div class="table-responsive">
@@ -43,9 +108,10 @@
                                                     <th>Tài khoản</th>
                                                     <th>Tên</th>
                                                     <th>Số điện thoại</th>
-                                                    <th>Nơi sinh</th>
+                                                    <th>Địa chỉ</th>
                                                     <th>Trạng thái</th>
                                                     <th>Chức năng</th>
+                                                    <th>Xem chi tiết</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -74,6 +140,11 @@
                                                                         class="fa fa-check"></i></button>
                                                                 <% }%>
                                                             </td>
+                                                            <td>
+                                                                <button data-toggle="modal" data-target="#myModal"
+                                                                    class="btn btn-icon btn-primary btn-sm show-tooltip detail-employee"><i
+                                                                        class="fa fa-th"></i></button>
+                                                            </td>
                                                         </tr>
                                                         <% }%>
                                             </tbody>
@@ -90,9 +161,19 @@
     <%  include ./../emlements/defaultFooter %>
     <%  include ./../emlements/script %>
     <script>
-        function changeStatus(id){
-            alert(id);
-        }
+        
+        $(".detail-employee").click(function () {
+            for (var i = 1; i < table.rows.length; i++) {
+                table.rows[i].onclick = function () {
+                    // get the seected row index
+                    rIndex = this.rowIndex;
+                    document.getElementById("dname").value = this.cells[2].innerHTML;
+                    document.getElementById("daccount").value = this.cells[1].innerHTML;
+                    document.getElementById("dphoneNumber").value = this.cells[3].innerHTML;
+                    document.getElementById("dplace").value = this.cells[4].innerHTML;
+                };
+            }
+        });
         function myFunction() {
             var input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("myInput");
