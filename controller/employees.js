@@ -21,8 +21,8 @@ router.list = (req, res, next) => {
   
 };
 
-router.listp = (req, res, next) => {
-  
+router.profile = (req, res, next) => {
+  res.render('employee/profile',{user: req.user});
 };
 
 router.changeStatus = (req, res, next) => {

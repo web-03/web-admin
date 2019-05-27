@@ -11,6 +11,7 @@ var index = require('../controller/index');
 
 
 router.get('/gian-hang',isLoggedIn ,category.list);
+router.get('/profile',isLoggedIn ,employee.profile);
 router.get('/dang-nhap', index.login);
 router.post('/login',index.postLogin);
 router.get('/logout',index.logout);
@@ -19,7 +20,6 @@ router.get('/gian-hang/chuyen-trang-thai/:id',isLoggedIn , category.changeStatus
 router.get('/nhan-vien',isLoggedIn , employee.list);
 router.get('/nhan-vien/doi-mat-khau', isLoggedIn ,employee.changePassword);
 router.post('/nhan-vien/doi-mat-khau',isLoggedIn , employee.saveNewPassword);
-router.post('/nhan-vien',isLoggedIn , employee.listp);
 router.get('/nhan-vien/chuyen-trang-thai/:id',isLoggedIn , employee.changeStatus);
 router.post('/nhan-vien/taomoi',isLoggedIn , employee.create);
 router.get('/khach-hang',isLoggedIn , customer.list);
