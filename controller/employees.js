@@ -98,17 +98,19 @@ router.changePassword = (req, res, next) => {
 };
 router.saveNewPassword = (req, res, next) => {
   let account = req.user.account;
-  let oldPassword = bcrypt.hashSync(req.body.oldPassword, null, null);
+  // let oldPassword = bcrypt.hashSync(req.body.oldPassword, null, null);
+  let oldPassword = req.body.oldPassword;
   let password = bcrypt.hashSync(req.body.newPassword, null, null);
-  console.log(oldPassword);
+  console.log("oldpass: "+oldPassword);
   let x, r;
   let sqlselect = 'select * from employees where account="'+account+'"';
   con.query(sqlselect, function(err, results, fields){
     x = results[0].password;
     console.log(x);
-    if(x == oldPassword){
+    if(bcrypt.compareSync(oldPassword, x)){
       let sql = 'UPDATE employees SET password="'+password+'" WHERE account="'+account+'"';
-      con.query(sql);
+      con.query(sql,function(err,results,fields){});
+      
       res.render('employee/changePassword',{user: req.user,msg: "Đổi mật khẩu thành công!"});
     }
     else{
