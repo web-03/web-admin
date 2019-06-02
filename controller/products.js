@@ -37,25 +37,18 @@ function checkFileType(file, cb){
   }
 }
 var productsAll = [];
-var categoriesAll = [];
-con.query('select * from categories', function (err, rows, fields) {
-  if (err) throw err
-  rows.forEach(element => {
-    var x = new category(element.id, element.name, element.status, element.description);
-    categoriesAll.push(x);
-  })
-});
+
 /* GET home page. */
 router.list = (req, res, next) => {
   
-  con.query('select * from products', function (err, rows, fields) {
+  con.query('select *, c.name as cateName from products p, categories c WHERE p.id_category = c.id', function (err, rows, fields) {
     if (err) throw err
     productsAll=[];
     rows.forEach(element => {
-      var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.id_category, element.status);
+      var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.cateName, element.status);
       productsAll.push(x);
     })
-    res.render('product/index',{products: productsAll, categories: categoriesAll,user: req.user})
+    res.render('product/index',{products: productsAll,user: req.user})
   });
 };
 
@@ -87,7 +80,7 @@ router.create = (req,res,next)=>{
         let description = req.body.description;
         console.log(id);
         console.log(name);
-        let linkImage = "https://shopping-web-admin.herokuapp.com/uploads/"+fileName;
+        let linkImage = "https://web-shopping-admin.herokuapp.com/uploads/"+fileName;
         console.log(linkImage);
         if(id == 0){
           
@@ -95,7 +88,7 @@ router.create = (req,res,next)=>{
           con.query(sql);
         }
         else{
-          if(linkImage == "https://shopping-web-admin.herokuapp.com/uploads/"){
+          if(linkImage == "https://web-shopping-admin.herokuapp.com/uploads/"){
             let sql = 'UPDATE products SET name="'+name+'",id_category= '+categoryId+' ,price='+price+', status= '+status+' ,quantity= '+quantity+' ,detail= "'+description+'" WHERE id='+id;
             con.query(sql);
           }

@@ -173,10 +173,7 @@
                                                         <td><%= products[i].price %></td>
                                                         <td><%= products[i].quantity %></td>
                                                         <td><%= products[i].description %></td>
-                                                        <% for(var k=0; k< categories.length; k++){ %>
-                                                                <% if(categories[k].id == products[i].categoryId){ %>
-                                                                    <td><%= categories[k].name %></td>
-                                                        <% break;}}%>        
+                                                       <td><%= products[i].categoryId %></td>     
                                                         <td><% if(products[i].status == "1"){ %>
                                                             <div class="tag tag-success">Hoạt động</div>
                                                             <% } else{%>
