@@ -48,7 +48,7 @@ con.query('select * from categories', function (err, rows, fields) {
 /* GET home page. */
 router.list = (req, res, next) => {
   
-  con.query('select *, c.name as cateName from products p, categories c WHERE p.id_category = c.id', function (err, rows, fields) {
+  con.query('select p.id, p.name, p.price,p.quantity, p.detail,p.image, p.status, c.name as cateName from products p, categories c WHERE p.id_category = c.id', function (err, rows, fields) {
     if (err) throw err
     productsAll=[];
     rows.forEach(element => {
