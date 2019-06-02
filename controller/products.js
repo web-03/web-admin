@@ -37,7 +37,14 @@ function checkFileType(file, cb){
   }
 }
 var productsAll = [];
-
+var categoriesAll = [];
+con.query('select * from categories', function (err, rows, fields) {
+  if (err) throw err
+  rows.forEach(element => {
+    var x = new category(element.id, element.name, element.status, element.description);
+    categoriesAll.push(x);
+  })
+});
 /* GET home page. */
 router.list = (req, res, next) => {
   
@@ -48,7 +55,7 @@ router.list = (req, res, next) => {
       var x = new product(element.id, element.name, element.price,element.quantity, element.detail,element.image,element.cateName, element.status);
       productsAll.push(x);
     })
-    res.render('product/index',{products: productsAll,user: req.user})
+    res.render('product/index',{products: productsAll, categories: categoriesAll,user: req.user})
   });
 };
 
