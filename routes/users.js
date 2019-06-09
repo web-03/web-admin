@@ -34,8 +34,12 @@ router.get('/thong-ke-bao-cao/tuan',isLoggedIn , report.week);
 router.get('/thong-ke-bao-cao/thang',isLoggedIn , report.month);
 router.get('/thong-ke-bao-cao/quy',isLoggedIn , report.quarter);
 router.get('/thong-ke-bao-cao/nam',isLoggedIn , report.year);
-router.get('/tops/san-pham',isLoggedIn , top.product);
-router.get('/tops/gian-hang',isLoggedIn , top.category);
+router.get('/tops/top-san-pham-ngay',isLoggedIn , top.dayproducts);
+router.get('/tops/top-san-pham-tuan',isLoggedIn , top.weekproducts);
+router.get('/tops/top-san-pham-thang',isLoggedIn , top.monthproducts);
+router.get('/tops/top-san-pham-quy',isLoggedIn , top.quaterproducts);
+router.get('/tops/top-gian-hang-ngay',isLoggedIn , top.categorydays);
+router.get('/tops/top-gian-hang-tuan',isLoggedIn , top.categoryweeks);
 router.get('/', index.home);
 
 

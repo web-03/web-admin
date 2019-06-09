@@ -2,7 +2,7 @@
 <html lang="en" data-textdirection="ltr" class="loading">
 
 <head>
-	<title>Sản phẩm top</title>
+	<title>SẢN PHẨM TOP báo cáo</title>
 	<%  include ./../emlements/css %>
 </head>
 
@@ -24,17 +24,22 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="san-pham"
+									<form id="formSearch" class="form form-horizontal" action="top-san-pham-quy"
 										method='GET'>
 										<div class="form-group col-md-4">
-											<label>Ngày</label>
-											<input type="date" id="from" class="form-control" name="from">
-										</div>
-										<div class="form-group col-md-4">
-											<label>Đến ngày</label>
-											<input type="date" id="to" class="form-control" name="to">
-										</div>
+											<label>Chọn năm</label>
+											<select id="year" class="select2 form-control" name="year">
+												<option value="<%= year %>"><%= year %>
 
+													<% for(var i=2018; i< 2030; i++){ %>
+													<%if(i != year){%>
+												<option value="<%= i %>"><%= i %>
+												</option>s
+												<%}%>
+													<%}%>
+											</select>
+										</div>
+										
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
 											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
@@ -47,6 +52,7 @@
 						</div>
 					</div>
 				</div>
+				<h2>Sản phẩm top theo quý năm <strong><%=year%></strong></h2>
 
 				<div class="row">
 					<div class="col-xl-12 col-lg-12">
@@ -55,29 +61,24 @@
 							<div class="card-body">
 								<div class="card-block">
 									<ul class="nav nav-tabs nav-underline no-hover-bg">
-										<li class="nav-item"><a class="nav-link active" id="base-tab31"
-												data-toggle="tab" aria-controls="tab31" href="#tab31"
-												aria-expanded="true">Ngày</a></li>
+										<li class="nav-item"><a class="nav-link" id="base-tab31" data-toggle="tab"
+												aria-controls="tab31" href="#tab31" aria-expanded="true">SẢN PHẨM TOP QUÝ
+												1</a></li>
 										<li class="nav-item"><a class="nav-link" id="base-tab32" data-toggle="tab"
-												aria-controls="tab32" href="#tab32" aria-expanded="false">
-												TUẦN</a></li>
+												aria-controls="tab32" href="#tab32" aria-expanded="false">SẢN PHẨM TOP
+												QUÝ 2</a></li>
 										<li class="nav-item"><a class="nav-link" id="base-tab33" data-toggle="tab"
-												aria-controls="tab33" href="#tab33" aria-expanded="false">
-												THÁNG</a></li>
-										<li class="nav-item"><a class="nav-link" id="base-tab35" data-toggle="tab"
-												aria-controls="tab35" href="#tab35" aria-expanded="false">
-												QUÝ</a></li>
-
+												aria-controls="tab33" href="#tab33" aria-expanded="false">SẢN PHẨM TOP
+												QUÝ 3</a></li>
 										<li class="nav-item"><a class="nav-link" id="base-tab34" data-toggle="tab"
-												aria-controls="tab34" href="#tab34" aria-expanded="false">
-												NĂM</a></li>
-
+												aria-controls="tab34" href="#tab34" aria-expanded="false">SẢN PHẨM TOP
+												QUÝ 4</a></li>
 									</ul>
 									<div class="tab-content px-1 pt-1">
 										<!-- ========= form tab 1 ======== -->
 
 
-										<div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true"
+										<div role="tabpanel" class="tab-pane" id="tab31" aria-expanded="true"
 											aria-labelledby="base-tab31">
 
 											<section id="chartjs-line-charts">
@@ -124,55 +125,21 @@
 																	<table class="table table-bordered mb-0">
 																		<thead>
 																			<tr>
-																				<th>Sản phẩm</th>
+																				<th>Tên sản phẩm</th>
 																				<th>Số lượng</th>
 																			</tr>
 																		</thead>
 																		<tbody>
-
+																			<% for(var i=0; i< reportQuarter1.length; i++){ %>
 																			<tr>
-																				<td>Vòng tay</td>
-																				<td>100</td>
+																				<td><%= reportQuarter1[i].create %></td>
+																				<td><%= reportQuarter1[i].total %> vnđ
+																				</td>
 																			</tr>
-																			<tr>
-																				<td>Dây chuyền</td>
-																				<td>90</td>
-																			</tr>
-																			<tr>
-																				<td>Giày Nike</td>
-																				<td>90</td>
-																			</tr>
-																			<tr>
-																				<td>Ốp lưng iphone X</td>
-																				<td>50</td>
-																			</tr>
-																			<tr>
-																				<td>Áo khác nam abc</td>
-																				<td>50</td>
-																			</tr>
-																			<tr>
-																				<td>Đồng hồ xx</td>
-																				<td>50</td>
-																			</tr>
-																			<tr>
-																				<td>Dép lê</td>
-																				<td>40</td>
-																			</tr>
-																			<tr>
-																				<td>Áo sơ mi nam xx</td>
-																				<td>30</td>
-																			</tr>
-																			<tr>
-																				<td>Sách những người khốn khổ</td>
-																				<td>30</td>
-																			</tr>
-																			<tr>
-																				<td>Tiểu thuyết Tam quốc diễn nghĩa</td>
-																				<td>30</td>
-																			</tr>
+																			<%}%>
 																			<tr>
 																				<td><strong>Tổng cộng</strong></td>
-																				<td><strong>560</strong></td>
+																				<td><strong><%= totalAmount1 %> vnđ</strong></td>
 																			</tr>
 																		</tbody>
 																	</table>
@@ -219,56 +186,24 @@
 																			<table class="table table-bordered mb-0">
 																				<thead>
 																					<tr>
-																						<th>Sản phẩm</th>
+																						<th>Tên sản phẩm</th>
 																						<th>Số lượng</th>
 																					</tr>
 																				</thead>
 																				<tbody>
-		
+																					<% for(var i=0; i< reportQuarter2.length; i++){ %>
 																					<tr>
-																						<td>Vòng tay</td>
-																						<td>100</td>
+																						<td><%= reportQuarter2[i].create %>
+																						</td>
+																						<td><%= reportQuarter2[i].total %>
+																							vnđ</td>
 																					</tr>
-																					<tr>
-																						<td>Dây chuyền</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Giày Nike</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Ốp lưng iphone X</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Áo khác nam abc</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Đồng hồ xx</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Dép lê</td>
-																						<td>40</td>
-																					</tr>
-																					<tr>
-																						<td>Áo sơ mi nam xx</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Sách những người khốn khổ</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Tiểu thuyết Tam quốc diễn nghĩa</td>
-																						<td>30</td>
-																					</tr>
+																					<%}%>
 																					<tr>
 																						<td><strong>Tổng cộng</strong></td>
-																						<td><strong>560</strong></td>
+																						<td><strong><%= totalAmount2%> vnđ</strong></td>
 																					</tr>
+																				</tbody>
 																				</tbody>
 																			</table>
 																		</div>
@@ -317,55 +252,22 @@
 																			<table class="table table-bordered mb-0">
 																				<thead>
 																					<tr>
-																						<th>Sản phẩm</th>
+																						<th>Tên sản phẩm</th>
 																						<th>Số lượng</th>
 																					</tr>
 																				</thead>
 																				<tbody>
-		
+																					<% for(var i=0; i< reportQuarter3.length; i++){ %>
 																					<tr>
-																						<td>Vòng tay</td>
-																						<td>100</td>
+																						<td><%= reportQuarter3[i].create %>
+																						</td>
+																						<td><%= reportQuarter3[i].total %>
+																							vnđ</td>
 																					</tr>
-																					<tr>
-																						<td>Dây chuyền</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Giày Nike</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Ốp lưng iphone X</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Áo khác nam abc</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Đồng hồ xx</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Dép lê</td>
-																						<td>40</td>
-																					</tr>
-																					<tr>
-																						<td>Áo sơ mi nam xx</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Sách những người khốn khổ</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Tiểu thuyết Tam quốc diễn nghĩa</td>
-																						<td>30</td>
-																					</tr>
+																					<%}%>
 																					<tr>
 																						<td><strong>Tổng cộng</strong></td>
-																						<td><strong>560</strong></td>
+																						<td><strong><%= totalAmount3 %> vnđ</strong></td>
 																					</tr>
 																				</tbody>
 																			</table>
@@ -377,107 +279,7 @@
 													</div>
 												</div>
 											</div>
-
 										</div>
-
-										<div class="tab-pane" id="tab35" aria-labelledby="base-tab35">
-											<!-- Column Chart -->
-											<div class="row">
-												<div class="card">
-													<div class="card-header">
-														<!-- The next line rotates HTML tooltips by 30 degrees clockwise. -->
-														<div class="row match-height">
-															<div id="pie_chart_quarter"
-																style="width: 900px; height: 300px;"></div>
-															<hr>
-															<br>
-															<div id="line_chart_quarter"
-																style="width: 900px; height: 300px;"></div>
-															<hr>
-															<br>
-															<div id="bar_chart_quarter"
-																style="width: 900px; height: 300px;"></div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xs-12">
-															<div class="card">
-																<div class="card-header">
-																	<h4 class="card-title" id="horz-layout-card-center">
-																		Thông
-																		tin báo cáo</h4>
-																</div>
-
-																<div class="dataTables_scroll" align="right">
-
-																	<div class="card-body collapse in">
-																		<div class="table-responsive">
-																			<table class="table table-bordered mb-0">
-																				<thead>
-																					<tr>
-																						<th>Sản phẩm</th>
-																						<th>Số lượng</th>
-																					</tr>
-																				</thead>
-																				<tbody>
-		
-																					<tr>
-																						<td>Vòng tay</td>
-																						<td>100</td>
-																					</tr>
-																					<tr>
-																						<td>Dây chuyền</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Giày Nike</td>
-																						<td>90</td>
-																					</tr>
-																					<tr>
-																						<td>Ốp lưng iphone X</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Áo khác nam abc</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Đồng hồ xx</td>
-																						<td>50</td>
-																					</tr>
-																					<tr>
-																						<td>Dép lê</td>
-																						<td>40</td>
-																					</tr>
-																					<tr>
-																						<td>Áo sơ mi nam xx</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Sách những người khốn khổ</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td>Tiểu thuyết Tam quốc diễn nghĩa</td>
-																						<td>30</td>
-																					</tr>
-																					<tr>
-																						<td><strong>Tổng cộng</strong></td>
-																						<td><strong>560</strong></td>
-																					</tr>
-																				</tbody>
-																			</table>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-
-										</div>
-
 
 										<!-- bao cao khach hang nam -->
 										<div class="tab-pane" id="tab34" aria-labelledby="base-tab34">
@@ -514,58 +316,26 @@
 
 																			<div class="card-body collapse in">
 																				<div class="table-responsive">
-																					<table class="table table-bordered mb-0">
+																					<table
+																						class="table table-bordered mb-0">
 																						<thead>
 																							<tr>
-																								<th>Sản phẩm</th>
+																								<th>Tên sản phẩm</th>
 																								<th>Số lượng</th>
 																							</tr>
 																						</thead>
 																						<tbody>
-				
+																							<% for(var i=0; i< reportQuarter4.length; i++){ %>
 																							<tr>
-																								<td>Vòng tay</td>
-																								<td>100</td>
+																								<td><%= reportQuarter4[i].create %>
+																								</td>
+																								<td><%= reportQuarter4[i].total %>
+																									vnđ</td>
 																							</tr>
-																							<tr>
-																								<td>Dây chuyền</td>
-																								<td>90</td>
-																							</tr>
-																							<tr>
-																								<td>Giày Nike</td>
-																								<td>90</td>
-																							</tr>
-																							<tr>
-																								<td>Ốp lưng iphone X</td>
-																								<td>50</td>
-																							</tr>
-																							<tr>
-																								<td>Áo khác nam abc</td>
-																								<td>50</td>
-																							</tr>
-																							<tr>
-																								<td>Đồng hồ xx</td>
-																								<td>50</td>
-																							</tr>
-																							<tr>
-																								<td>Dép lê</td>
-																								<td>40</td>
-																							</tr>
-																							<tr>
-																								<td>Áo sơ mi nam xx</td>
-																								<td>30</td>
-																							</tr>
-																							<tr>
-																								<td>Sách những người khốn khổ</td>
-																								<td>30</td>
-																							</tr>
-																							<tr>
-																								<td>Tiểu thuyết Tam quốc diễn nghĩa</td>
-																								<td>30</td>
-																							</tr>
+																							<%}%>
 																							<tr>
 																								<td><strong>Tổng cộng</strong></td>
-																								<td><strong>560</strong></td>
+																								<td><strong><%= totalAmount4 %> vnđ</strong></td>
 																							</tr>
 																						</tbody>
 																					</table>
@@ -595,7 +365,6 @@
 
 	<script type="text/javascript">
 
-
 		// Load the Visualization API and the piechart package.
 		google.load('visualization', '1.0', {
 			'packages': ['corechart']
@@ -623,30 +392,14 @@
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Số lượng'],
-				['Vòng tay', 100],
-
-				['Dây chuyền', 90],
-
-				['Giày Nike', 90],
-
-				['Ốp lưng iphone X', 50],
-
-				['Áo khác nam abc', 50],
-
-				['Đồng hồ xx', 50],
-
-				['Dép lê', 40],
-
-				['Áo sơ mi nam xx', 30],
-
-				['Sách những người khốn khổ', 30],
-
-				['Tiểu thuyết Tam quốc diễn nghĩa', 30],
+				['Report', 'Doanh thu quý 1'],
+				<% for (var i = 0; i < reportQuarter1.length; i++) { %>
+				['<%=reportQuarter1[i].create%>',<%=reportQuarter1[i].total %>],
+				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				'title': 'Top 10 sản phẩm theo Ngày',
+				'title': 'Báo Cáo Doanh thu quý 1',
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -673,30 +426,14 @@
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Số lượng'],
-				['Vòng tay', 100],
-
-				['Dây chuyền', 90],
-
-				['Giày Nike', 90],
-
-				['Ốp lưng iphone X', 50],
-
-				['Áo khác nam abc', 50],
-
-				['Đồng hồ xx', 50],
-
-				['Dép lê', 40],
-
-				['Áo sơ mi nam xx', 30],
-
-				['Sách những người khốn khổ', 30],
-
-				['Tiểu thuyết Tam quốc diễn nghĩa', 30],
+				['Report', 'Doanh thu quý 2'],
+				<% for (var i = 0; i < reportQuarter2.length; i++) { %>
+				['<%=reportQuarter2[i].create%>',<%=reportQuarter2[i].total %>],
+				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Top 10 sản phẩm trong Tuần",
+				title: "Báo cáo Doanh thu quý 2",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -720,30 +457,14 @@
 		function drawMonthReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Số lượng'],
-				['Vòng tay', 100],
-
-				['Dây chuyền', 90],
-
-				['Giày Nike', 90],
-
-				['Ốp lưng iphone X', 50],
-
-				['Áo khác nam abc', 50],
-
-				['Đồng hồ xx', 50],
-
-				['Dép lê', 40],
-
-				['Áo sơ mi nam xx', 30],
-
-				['Sách những người khốn khổ', 30],
-
-				['Tiểu thuyết Tam quốc diễn nghĩa', 30],
+				['Report', 'Doanh thu quý 3'],
+				<% for (var i = 0; i < reportQuarter3.length; i++) { %>
+				['<%=reportQuarter3[i].create%>',<%=reportQuarter3[i].total %>],
+				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Top 10 sản phẩm Tháng",
+				title: "Báo Cáo Doanh thu quý 3",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -761,77 +482,17 @@
 			barChartMonth.draw(data, options);
 		}
 
-		function drawQuarterReport() {
-			// Create the data table.    
-			var data = google.visualization.arrayToDataTable([
-				['Report', 'Số lượng'],
-				['Vòng tay', 100],
-
-				['Dây chuyền', 90],
-
-				['Giày Nike', 90],
-
-				['Ốp lưng iphone X', 50],
-
-				['Áo khác nam abc', 50],
-
-				['Đồng hồ xx', 50],
-
-				['Dép lê', 40],
-
-				['Áo sơ mi nam xx', 30],
-
-				['Sách những người khốn khổ', 30],
-
-				['Tiểu thuyết Tam quốc diễn nghĩa', 30],
-			]);
-			// Set chart options
-			var options = {
-				title: "Top 10 sản phẩm Quý",
-				is3D: true,
-				pieSliceText: 'label',
-				tooltip: { showColorCode: true },
-				'width': 900,
-				'height': 400
-			};
-			// Instantiate and draw our chart, passing in some options.
-			var pieChartMonth = new google.visualization.PieChart(document.getElementById("pie_chart_quarter"));
-			pieChartMonth.draw(data, options);
-
-			var lineChartMonth = new google.visualization.LineChart(document.getElementById("line_chart_quarter"));
-			lineChartMonth.draw(data, options);
-
-			var barChartMonth = new google.visualization.ColumnChart(document.getElementById("bar_chart_quarter"));
-			barChartMonth.draw(data, options);
-		}
-
 		function drawYearReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Số lượng'],
-				['Vòng tay', 100],
-
-				['Dây chuyền', 90],
-
-				['Giày Nike', 90],
-
-				['Ốp lưng iphone X', 50],
-
-				['Áo khác nam abc', 50],
-
-				['Đồng hồ xx', 50],
-
-				['Dép lê', 40],
-
-				['Áo sơ mi nam xx', 30],
-
-				['Sách những người khốn khổ', 30],
-
-				['Tiểu thuyết Tam quốc diễn nghĩa', 30],
+				['Report', 'Doanh thu quý 4'],
+				<% for (var i = 0; i < reportQuarter4.length; i++) { %>
+				['<%=reportQuarter4[i].create%>',<%=reportQuarter4[i].total %>],
+				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Top 10 sản phẩm Năm",
+				title: "Báo Cáo Doanh Thu Doanh thu quý 4",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },

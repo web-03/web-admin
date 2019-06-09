@@ -2,7 +2,7 @@
 <html lang="en" data-textdirection="ltr" class="loading">
 
 <head>
-	<title>Thống kê báo cáo</title>
+	<title>Sản phẩm top</title>
 	<%  include ./../emlements/css %>
 </head>
 
@@ -24,13 +24,14 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="/thong-ke-bao-cao/tuan"
+									<form id="formSearch" class="form form-horizontal" action="top-san-pham-tuan"
 										method='GET'>
 										<div class="form-group col-md-4">
 											<label>Ngày</label>
-											<input type="date" id="from" value="<%=from%>" class="form-control" name="from">
+											<input type="date" id="from" value="<%=from%>"class="form-control" name="from">
 										</div>
 										
+
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
 											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
@@ -53,14 +54,15 @@
 									<ul class="nav nav-tabs nav-underline no-hover-bg">
 										
 										<li class="nav-item"><a class="nav-link active" id="base-tab32" data-toggle="tab"
-												aria-controls="tab32" href="#tab32" aria-expanded="false">THỐNG KÊ
+												aria-controls="tab32" href="#tab32" aria-expanded="false">
 												TUẦN</a></li>
+										
 
 									</ul>
 									<div class="tab-content px-1 pt-1">
 										<!-- ========= form tab 1 ======== -->
 
-										<div class="tab-pane  active" id="tab32" aria-labelledby="base-tab32">
+										<div class="tab-pane active" id="tab32" aria-labelledby="base-tab32">
 											<!-- Column Chart -->
 											<div class="row">
 												<div class="card">
@@ -79,6 +81,7 @@
 																style="width: 900px; height: 300px;"></div>
 														</div>
 													</div>
+													
 													<div class="row">
 														<div class="col-xs-12">
 															<div class="card">
@@ -95,20 +98,21 @@
 																			<table class="table table-bordered mb-0">
 																				<thead>
 																					<tr>
-																						<th>Thứ</th>
-																						<th>Doanh thu</th>
+																						<th>Sản phẩm</th>
+																						<th>Số lượng</th>
 																					</tr>
 																				</thead>
 																				<tbody>
-																					<% for(var i=0; i< reportDays.length; i++){ %>
+		
+																					<% for(var i=0; i< TopProduct.length; i++){ %>
 																						<tr>
-																							<td><%= reportDays[i].create %></td>
-																							<td><%= reportDays[i].total %> vnđ</td>
+																							<td><%= TopProduct[i].create %></td>
+																							<td><%= TopProduct[i].total %></td>
 																						</tr>
 																					<%}%>
-																					<tr>
 																						<td><strong>Tổng cộng</strong></td>
-																						<td><strong><%= totalAmount %> vnđ</strong></td>
+																						<td><strong><%=totalAmount%></strong></td>
+																					</tr>
 																				</tbody>
 																			</table>
 																		</div>
@@ -121,8 +125,9 @@
 											</div>
 
 										</div>
+										</div>
+									
 									</div>
-								</div>
 								</div>
 							</div>
 						</div>
@@ -145,23 +150,34 @@
 
 
 		// Set a callback to run when the Google Visualization API is loaded.
-		google.setOnLoadCallback(drawChartWeek);
 		
 
-		// draws it.
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawChartWeek);
+		// Callback that creates and populates a data table,
+		// instantiates the pie chart, passes in the data and
+
+		// Set a callback to run when the Google Visualization API is loaded.
+	
+
+		// Set a callback to run when the Google Visualization API is loaded.
 		
+		
+		
+
+
 		function drawChartWeek() {
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
-				<% for(var i=0; i< reportDays.length; i++){ %>
-					['<%=reportDays[i].create%>',<%=reportDays[i].total%>],
+				['Top sẩn phẩm theo tuần', 'Số lượng'],
+				<% for(var i=0; i< TopProduct.length; i++){ %>
+					['<%=TopProduct[i].create%>',<%=TopProduct[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Thống kê Doanh thu trong Tuần",
+				title: "Top 10 sản phẩm trong Tuần",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
@@ -182,6 +198,7 @@
 			barChartWeek.draw(data, options);
 		}
 
+		
 	</script>
 
 </body>

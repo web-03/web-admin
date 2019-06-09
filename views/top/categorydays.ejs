@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-textdirection="ltr" class="loading">
+
+<head>
+	<title>Gian hàng top</title>
+	<%  include ./../emlements/css %>
+</head>
+
+<body data-open="click" data-menu="vertical-menu" data-col="2-columns"
+	class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar">
+	<nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-light bg-gradient-x-grey-blue">
+		<%  include ./../emlements/defaultHeader %>
+	</nav>
+	<%  include ./../emlements/defaultMenu %>
+	<div class="app-content content container-fluid">
+		<div class="content-wrapper">
+			<div class="content-body">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title" id="horz-layout-card-center">Tìm kiếm</h4>
+								<a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+							</div>
+							<div class="card-body collapse in">
+								<div class="card-block">
+									<form id="formSearch" class="form form-horizontal" action="top-gian-hang-ngay"
+										method='GET'>
+										<div class="form-group col-md-4">
+											<label>Ngày</label>
+											<input type="date" id="from" value="<%=to%>"class="form-control" name="from">
+										</div>
+										
+
+										<div class="form-group col-md-4">
+											<label>Xem kết quả</label></br />
+											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
+												<i class="fa fa-check-square-o"></i> Xem
+											</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xl-12 col-lg-12">
+						<div class="card">
+
+							<div class="card-body">
+								<div class="card-block">
+									<ul class="nav nav-tabs nav-underline no-hover-bg">
+										<li class="nav-item"><a class="nav-link active" id="base-tab31"
+												data-toggle="tab" aria-controls="tab31" href="#tab31"
+												aria-expanded="true">Ngày</a></li>
+										
+
+									</ul>
+									<div class="tab-content px-1 pt-1">
+										<!-- ========= form tab 1 ======== -->
+
+
+										<div role="tabpanel" class="tab-pane active" id="tab31" aria-expanded="true"
+											aria-labelledby="base-tab31">
+
+											<section id="chartjs-line-charts">
+												<!-- Line Chart -->
+												<div class="row">
+													<div class="card">
+														<div class="card-header">
+															<!-- Pie chart -->
+															<div class="row match-height">
+																<div class="col-sm-12">
+																	<div id="pie_chart"></div>
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="line_chart"></div>
+																	</div>
+																	<hr>
+																	<br>
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="bar_chart"></div>
+																	</div>
+
+																	<!-- Line chart -->
+																	<div class="col-sm-12">
+																		<div id="revenue_chart"></div>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+											<div class="row">
+												<div class="col-xs-12">
+													<div class="card">
+														<div class="card-header">
+															<h4 class="card-title" id="horz-layout-card-center">Thông
+																tin báo cáo</h4>
+														</div>
+														<div class="dataTables_scroll">
+															<div class="card-body collapse in">
+																<div class="table-responsive">
+																	<table class="table table-bordered mb-0">
+																		<thead>
+																			<tr>
+																				<th>Tên gian hàng</th>
+																				<th>Số lượng </th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<% for(var i=0; i< CategoriesName.length; i++){ %>
+																				
+																				<tr>
+																					<td><%= CategoriesName[i].create %></td>
+																					<td><%= CategoriesName[i].total %></td>
+																				</tr>
+																			<%}%>
+																				<td><strong>Tổng cộng</strong></td>
+																				<td><strong><%=totalAmount%></strong></td>
+																			</tr>
+																			
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+																			
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<%  include ./../emlements/defaultFooter %>
+	<%  include ./../emlements/script %>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+	<script type="text/javascript">
+
+
+		// Load the Visualization API and the piechart package.
+		google.load('visualization', '1.0', {
+			'packages': ['corechart']
+		});
+
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawChart);
+
+	
+	
+
+		// draws it.
+		function drawChart() {
+
+// Create the data table.    
+var data = google.visualization.arrayToDataTable([
+	['Report', 'Doanh thu'],
+	<% for(var i=0; i< CategoriesName.length; i++){ %>
+		['<%=CategoriesName[i].create%>',<%=CategoriesName[i].total%>],
+	<%}%>
+]);
+// Set chart options
+var options = {
+	'title': 'Báo Cáo Doanh thu Theo Ngày',
+	is3D: true,
+	pieSliceText: 'label',
+	tooltip: { showColorCode: true },
+	'width': 900,
+	'height': 400
+};
+// Instantiate and draw our chart, passing in some options.
+var chart = new google.visualization.PieChart(document.getElementById('pie_chart'));
+chart.draw(data, options);
+
+var line_chart = new google.visualization.LineChart(document.getElementById('line_chart'));
+line_chart.draw(data, options);
+
+var bar_chart = new google.visualization.ColumnChart(document.getElementById('bar_chart'));
+bar_chart.draw(data, options);
+}
+
+
+	
+	</script>
+
+</body>
+
+</html>

@@ -2,7 +2,7 @@
 <html lang="en" data-textdirection="ltr" class="loading">
 
 <head>
-	<title>Thống kê báo cáo</title>
+	<title>Sản phẩm top</title>
 	<%  include ./../emlements/css %>
 </head>
 
@@ -24,13 +24,23 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="/thong-ke-bao-cao/tuan"
+									<form id="formSearch" class="form form-horizontal" action="top-san-pham-thang"
 										method='GET'>
 										<div class="form-group col-md-4">
-											<label>Ngày</label>
-											<input type="date" id="from" value="<%=from%>" class="form-control" name="from">
-										</div>
+											<label>Chọn tháng</label>
+											<select id="month" class="select2 form-control" name="month">
+												<option value="<%= month %>">Tháng <%= month %>
+												
+												<% for(var i=1; i< 13; i++){ %>
+													<%if(i != month){%>
+														<option value="<%= i %>">Tháng <%= i %>
+														</option>s
+													<%}%>
+												<%}%>
+											</select>
+									</div>
 										
+
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
 											<button id="btnSearch" type="submit" class="btn btn-primary input-lg">
@@ -43,7 +53,7 @@
 						</div>
 					</div>
 				</div>
-				<h2>Doanh thu theo tuần từ ngày <strong><%=from%></strong> đến ngày <strong><%=to%></strong></h2>
+				<h1>Top sản phẩm tháng <strong><%=month%></strong></h1>
 				<div class="row">
 					<div class="col-xl-12 col-lg-12">
 						<div class="card">
@@ -52,30 +62,33 @@
 								<div class="card-block">
 									<ul class="nav nav-tabs nav-underline no-hover-bg">
 										
-										<li class="nav-item"><a class="nav-link active" id="base-tab32" data-toggle="tab"
-												aria-controls="tab32" href="#tab32" aria-expanded="false">THỐNG KÊ
-												TUẦN</a></li>
+										<li class="nav-item"><a class="nav-link active" id="base-tab33" data-toggle="tab"
+												aria-controls="tab33" href="#tab33" aria-expanded="false">
+												THÁNG</a></li>
+										
 
 									</ul>
 									<div class="tab-content px-1 pt-1">
 										<!-- ========= form tab 1 ======== -->
 
-										<div class="tab-pane  active" id="tab32" aria-labelledby="base-tab32">
+
+										
+										<div class="tab-pane active" id="tab33" aria-labelledby="base-tab33">
 											<!-- Column Chart -->
 											<div class="row">
 												<div class="card">
 													<div class="card-header">
 														<!-- The next line rotates HTML tooltips by 30 degrees clockwise. -->
 														<div class="row match-height">
-															<div id="pie_chart_week"
+															<div id="pie_chart_month"
 																style="width: 900px; height: 300px;"></div>
 															<hr>
 															<br>
-															<div id="line_chart_week"
+															<div id="line_chart_month"
 																style="width: 900px; height: 300px;"></div>
 															<hr>
 															<br>
-															<div id="bar_chart_week"
+															<div id="bar_chart_month"
 																style="width: 900px; height: 300px;"></div>
 														</div>
 													</div>
@@ -95,20 +108,20 @@
 																			<table class="table table-bordered mb-0">
 																				<thead>
 																					<tr>
-																						<th>Thứ</th>
-																						<th>Doanh thu</th>
+																						<th>Sản phẩm</th>
+																						<th>Số lượng</th>
 																					</tr>
 																				</thead>
 																				<tbody>
-																					<% for(var i=0; i< reportDays.length; i++){ %>
+																					<% for(var i=0; i< TopProduct.length; i++){ %>
 																						<tr>
-																							<td><%= reportDays[i].create %></td>
-																							<td><%= reportDays[i].total %> vnđ</td>
+																							<td><%= TopProduct[i].create %></td>
+																							<td><%= TopProduct[i].total %></td>
 																						</tr>
 																					<%}%>
-																					<tr>
 																						<td><strong>Tổng cộng</strong></td>
-																						<td><strong><%= totalAmount %> vnđ</strong></td>
+																						<td><strong><%=totalAmount%></strong></td>
+																					</tr>
 																				</tbody>
 																			</table>
 																		</div>
@@ -121,8 +134,8 @@
 											</div>
 
 										</div>
+
 									</div>
-								</div>
 								</div>
 							</div>
 						</div>
@@ -144,44 +157,42 @@
 		});
 
 
-		// Set a callback to run when the Google Visualization API is loaded.
-		google.setOnLoadCallback(drawChartWeek);
 		
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawMonthReport);
 
+		
 		// draws it.
 		
-		function drawChartWeek() {
-
+		function drawMonthReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Report', 'Doanh thu'],
-				<% for(var i=0; i< reportDays.length; i++){ %>
-					['<%=reportDays[i].create%>',<%=reportDays[i].total%>],
+				['Top sẩn phẩm theo tháng', 'Số lượng'],
+				<% for(var i=0; i< TopProduct.length; i++){ %>
+					['<%=TopProduct[i].create%>',<%=TopProduct[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Thống kê Doanh thu trong Tuần",
+				title: "Top 10 sản phẩm Tháng",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
 				'width': 900,
 				'height': 400
 			};
-
-
-
 			// Instantiate and draw our chart, passing in some options.
-			var pieChartWeek = new google.visualization.PieChart(document.getElementById("pie_chart_week"));
-			pieChartWeek.draw(data, options);
+			var pieChartMonth = new google.visualization.PieChart(document.getElementById("pie_chart_month"));
+			pieChartMonth.draw(data, options);
 
-			var lineChartWeek = new google.visualization.LineChart(document.getElementById("line_chart_week"));
-			lineChartWeek.draw(data, options);
+			var lineChartMonth = new google.visualization.LineChart(document.getElementById("line_chart_month"));
+			lineChartMonth.draw(data, options);
 
-			var barChartWeek = new google.visualization.ColumnChart(document.getElementById("bar_chart_week"));
-			barChartWeek.draw(data, options);
+			var barChartMonth = new google.visualization.ColumnChart(document.getElementById("bar_chart_month"));
+			barChartMonth.draw(data, options);
 		}
 
+		
 	</script>
 
 </body>
