@@ -109,7 +109,7 @@
 																				<tbody>
 		
 																					<% for(var i=0; i< TopProduct.length; i++){ %>
-																						<%if(i==10) break;%>
+																						
 																						<tr>
 																							<td><%= TopProduct[i].create %></td>
 																							<td><%= TopProduct[i].total %></td>
@@ -177,7 +177,7 @@
 			var data = google.visualization.arrayToDataTable([
 				['Top sẩn phẩm theo tuần', 'Số lượng'],
 				<% for(var i=0; i< TopProduct.length; i++){ %>
-					<%if(i==10) break;%>
+					
 					['<%=TopProduct[i].create%>',<%=TopProduct[i].total%>],
 				<%}%>
 			]);

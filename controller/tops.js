@@ -32,7 +32,7 @@ router.dayproducts = (req, res, next) => {
   let totalAmount=0;
   let TopProduct = [];
   let CategoriesName =[];
-  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  Date(created_at) ="'+fromDay+'" GROUP BY(od.id_product)', function (err, rows, fields) {
+  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  Date(created_at) ="'+fromDay+'" GROUP BY(od.id_product)ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.ProductName, element.Count);
@@ -40,7 +40,7 @@ router.dayproducts = (req, res, next) => {
       CategoriesName.push(element.categorieName);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/dayproducts', { TopProduct: TopProduct, CategoriesName:CategoriesName,totalAmount:totalAmount, to : to ,user: req.user});
   });
 };
@@ -88,7 +88,7 @@ router.weekproducts = (req, res, next) => {
   }
   let TopProduct=[];
   let CategoriesName=[];
-  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY(od.id_product)  ', function (err, rows, fields) {
+  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY(od.id_product) ORDER BY Count DESC LIMIT 0,10 ', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.ProductName, element.Count);
@@ -96,7 +96,7 @@ router.weekproducts = (req, res, next) => {
       CategoriesName.push(element.categorieName);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/weekproducts', { TopProduct: TopProduct, totalAmount:totalAmount,CategoriesName:CategoriesName, to:to, from:from ,user: req.user});
 });
 };
@@ -118,7 +118,7 @@ router.monthproducts= (req, res, next) => {
   let TopProduct = [];
   let totalAmount = 0;
   let CategoriesName=[];
-  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at  BETWEEN "'+fromDay+'" AND "'+toDay+'"  GROUP BY(od.id_product)', function (err, rows, fields) {
+  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at  BETWEEN "'+fromDay+'" AND "'+toDay+'"  GROUP BY(od.id_product) ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.ProductName, element.Count);
@@ -126,7 +126,7 @@ router.monthproducts= (req, res, next) => {
       CategoriesName.push(element.categorieName);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+   
     res.render('top/monthproducts', { TopProduct: TopProduct, totalAmount: totalAmount, month:month ,user: req.user});
   });
 };
@@ -225,14 +225,14 @@ router.yearproducts=(req,res,next)=>{
   }
   let TopProduct = [];
   let totalAmount=0;
-  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY od.id_product', function (err, rows, fields) {
+  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY od.id_product ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x=new reportDay(element.ProductName, element.Count);
       TopProduct.push(x);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/yearproducts',{TopProduct:TopProduct,year:year,totalAmount:totalAmount,user:req.user});
   
 });
@@ -242,14 +242,14 @@ router.daytodayproducts=(req,res,next)=>{
   let from = req.query.from;
   let TopProduct = [];
   let totalAmount=0;
-  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY od.id_product', function (err, rows, fields) {
+  con.query('select (p.name) as ProductName, count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY od.id_product ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x=new reportDay(element.ProductName, element.Count);
       TopProduct.push(x);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/daytodayproducts',{TopProduct:TopProduct,to:to,from:from,totalAmount:totalAmount,user:req.user});
   
 });
@@ -282,7 +282,7 @@ router.categorydays = (req, res, next) => {
   let totalAmount=0;
   let tong=0;
   let CategoriesName =[];
-  con.query('select count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  Date(created_at) ="'+fromDay+'" GROUP BY(c.id)', function (err, rows, fields) {
+  con.query('select count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  Date(created_at) ="'+fromDay+'" GROUP BY(c.id)ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       
@@ -290,7 +290,7 @@ router.categorydays = (req, res, next) => {
       CategoriesName.push(x);
       totalAmount+=x.total;
     });
-    CategoriesName.sort(function(a,b){return b.total-a.total});
+   
 
     res.render('top/categorydays', {  CategoriesName:CategoriesName,totalAmount:totalAmount, to : to ,user: req.user});
   });
@@ -338,7 +338,7 @@ router.categoryweeks = (req, res, next) => {
   
   let CategoriesName =[];
   
-  con.query('select  count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY(c.id)  ', function (err, rows, fields) {
+  con.query('select  count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY(c.id) ORDER BY Count DESC LIMIT 0,10 ', function (err, rows, fields) {
     
     if (err) throw err
     rows.forEach(element => {
@@ -348,7 +348,7 @@ router.categoryweeks = (req, res, next) => {
       totalAmount+=x.total;
     });
     
-    CategoriesName.sort(function(a,b){return b.total-a.total});
+   
     res.render('top/categoryweeks', {  CategoriesName:CategoriesName,totalAmount:totalAmount, to : to ,from:from,user: req.user});
   
   });
@@ -371,14 +371,14 @@ router.categorymonths= (req, res, next) => {
   let TopProduct = [];
   let totalAmount = 0;
   
-  con.query('select count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  o.created_at  BETWEEN "'+fromDay+'" AND "'+toDay+'"  GROUP BY(c.id)', function (err, rows, fields) {
+  con.query('select count(c.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c where p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and  o.created_at  BETWEEN "'+fromDay+'" AND "'+toDay+'"  GROUP BY(c.id) ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x = new reportDay(element.categorieName, element.Count);
       TopProduct.push(x);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+  
     res.render('top/categorymonths', { TopProduct: TopProduct, totalAmount: totalAmount, month:month ,user: req.user});
   });
 };
@@ -396,7 +396,7 @@ router.categoryquarters = (req, res, next) => {
    
   
   
-  con.query('select  count(p.id) as Count,(c.name) as categorieName, MONTH(o.created_at) as orderDay from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY c.id, MONTH(o.created_at)', function (err, rows, fields) {
+  con.query('select  count(p.id) as Count,(c.name) as categorieName, MONTH(o.created_at) as orderDay from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY c.id, MONTH(o.created_at) ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       switch (element.orderDay) {
@@ -462,10 +462,7 @@ router.categoryquarters = (req, res, next) => {
           break;
       }
     });
-    TopProduct1.sort(function(a,b){return b.total-a.total});
-    TopProduct2.sort(function(a,b){return b.total-a.total});
-    TopProduct3.sort(function(a,b){return b.total-a.total});
-    TopProduct4.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/categoryquarters', { TopProduct1: TopProduct1, TopProduct2: TopProduct2, TopProduct3: TopProduct3, TopProduct4: TopProduct4, totalAmount1: totalAmount1, totalAmount2: totalAmount2, totalAmount3: totalAmount3, totalAmount4: totalAmount4,  year:year ,user: req.user});
   });
 };
@@ -477,14 +474,14 @@ router.categoryyears=(req,res,next)=>{
   }
   let TopProduct = [];
   let totalAmount=0;
-  con.query('select  count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY c.id', function (err, rows, fields) {
+  con.query('select  count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and o.created_at and YEAR(o.created_at)="' + year + '" GROUP BY c.id ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x=new reportDay(element.categorieName, element.Count);
       TopProduct.push(x);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+   
     res.render('top/categoryyears',{TopProduct:TopProduct,year:year,totalAmount:totalAmount,user:req.user});
   
 });
@@ -494,14 +491,14 @@ router.categorydaytoday=(req,res,next)=>{
   let from = req.query.from;
   let TopProduct = [];
   let totalAmount=0;
-  con.query('select  count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY c.id', function (err, rows, fields) {
+  con.query('select  count(p.id) as Count,(c.name) as categorieName from products p, order_detail od, orders o,categories c WHERE p.id = od.id_product and o.id = od.id_order and c.id=p.id_category and created_at BETWEEN "'+from+'" AND "'+to+'" GROUP BY c.id ORDER BY Count DESC LIMIT 0,10', function (err, rows, fields) {
     if (err) throw err
     rows.forEach(element => {
       var x=new reportDay(element.categorieName, element.Count);
       TopProduct.push(x);
       totalAmount+=x.total;
     });
-    TopProduct.sort(function(a,b){return b.total-a.total});
+    
     res.render('top/categorydaytoday',{TopProduct:TopProduct,to:to,from:from,totalAmount:totalAmount,user:req.user});
   
 });

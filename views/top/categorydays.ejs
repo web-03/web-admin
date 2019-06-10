@@ -115,7 +115,7 @@
 																		</thead>
 																		<tbody>
 																			<% for(var i=0; i< CategoriesName.length; i++){ %>
-																				<%if(i==10) break;%>
+																				
 																				<tr>
 																					<td><%= CategoriesName[i].create %></td>
 																					<td><%= CategoriesName[i].total %></td>
@@ -170,7 +170,7 @@
 var data = google.visualization.arrayToDataTable([
 	['Report', 'Doanh thu'],
 	<% for(var i=0; i< CategoriesName.length; i++){ %>
-		<%if(i==10) break;%>
+		
 		['<%=CategoriesName[i].create%>',<%=CategoriesName[i].total%>],
 	<%}%>
 ]);
