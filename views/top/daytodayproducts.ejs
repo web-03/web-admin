@@ -24,13 +24,16 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="top-san-pham-ngay"
+									<form id="formSearch" class="form form-horizontal" action="top-san-pham-ngay-ngay"
 										method='GET'>
 										<div class="form-group col-md-4">
 											<label>Ngày</label>
-											<input type="date" id="from" value="<%=to%>"class="form-control" name="from">
+											<input type="date" id="from" value="<%=from%>"class="form-control" name="from">
 										</div>
-										
+										<div class="form-group col-md-4">
+                                                <label>Đến Ngày</label>
+                                                <input type="date" id="to" value="<%=to%>"class="form-control" name="to">
+                                            </div>
 
 										<div class="form-group col-md-4">
 											<label>Xem kết quả</label></br />
@@ -114,8 +117,8 @@
 																			</tr>
 																		</thead>
 																		<tbody>
-																			<% for(var i=0;i< TopProduct.length;i++){ %>
-																				     <%if(i==10) break;%>
+																			<% for(var i=0; i< TopProduct.length; i++){ %>
+																				<%if(i==10) break;%>
 																				<tr>
 																					<td><%= TopProduct[i].create %></td>
 																					<td><%= TopProduct[i].total %></td>
@@ -176,7 +179,7 @@ var data = google.visualization.arrayToDataTable([
 ]);
 // Set chart options
 var options = {
-	'title': 'Top sản phẩm Theo Ngày',
+	'title': 'Báo Cáo Doanh thu Theo Ngày',
 	is3D: true,
 	pieSliceText: 'label',
 	tooltip: { showColorCode: true },

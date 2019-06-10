@@ -38,8 +38,14 @@ router.get('/tops/top-san-pham-ngay',isLoggedIn , top.dayproducts);
 router.get('/tops/top-san-pham-tuan',isLoggedIn , top.weekproducts);
 router.get('/tops/top-san-pham-thang',isLoggedIn , top.monthproducts);
 router.get('/tops/top-san-pham-quy',isLoggedIn , top.quaterproducts);
+router.get('/tops/top-san-pham-nam',isLoggedIn , top.yearproducts);
+router.get('/tops/top-san-pham-ngay-ngay',isLoggedIn , top.daytodayproducts);
 router.get('/tops/top-gian-hang-ngay',isLoggedIn , top.categorydays);
 router.get('/tops/top-gian-hang-tuan',isLoggedIn , top.categoryweeks);
+router.get('/tops/top-gian-hang-thang',isLoggedIn , top.categorymonths);
+router.get('/tops/top-gian-hang-quy',isLoggedIn , top.categoryquarters);
+router.get('/tops/top-gian-hang-nam',isLoggedIn , top.categoryyears);
+router.get('/tops/top-gian-hang-ngay-ngay',isLoggedIn , top.categorydaytoday);
 router.get('/', index.home);
 
 

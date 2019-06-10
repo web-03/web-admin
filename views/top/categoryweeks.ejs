@@ -4,6 +4,7 @@
 <head>
 	<title>Sản phẩm top</title>
 	<%  include ./../emlements/css %>
+	
 </head>
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
@@ -105,6 +106,7 @@
 																				<tbody>
 		
 																					<% for(var i=0; i< CategoriesName.length; i++){ %>
+																						<%if(i==10) break;%>
 																						<tr>
 																							<td><%= CategoriesName[i].create %></td>
 																							<td><%= CategoriesName[i].total %></td>
@@ -170,14 +172,15 @@
 
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Top sản phẩm theo tuần', 'Số lượng'],
+				['Top gian hàng theo tuần', 'Số lượng'],
 				<% for(var i=0; i< CategoriesName.length; i++){ %>
+					<%if(i==10) break;%>
 					['<%=CategoriesName[i].create%>',<%=CategoriesName[i].total%>],
 				<%}%>
 			]);
 			// Set chart options
 			var options = {
-				title: "Top 10 sản phẩm trong Tuần",
+				title: "Top 10 gian hàng trong Tuần",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },

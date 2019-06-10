@@ -2,7 +2,7 @@
 <html lang="en" data-textdirection="ltr" class="loading">
 
 <head>
-	<title>Sản phẩm top</title>
+	<title>gian hàng top</title>
 	<%  include ./../emlements/css %>
 </head>
 
@@ -24,7 +24,7 @@
 							</div>
 							<div class="card-body collapse in">
 								<div class="card-block">
-									<form id="formSearch" class="form form-horizontal" action="top-san-pham-thang"
+									<form id="formSearch" class="form form-horizontal" action="top-gian-hang-thang"
 										method='GET'>
 										<div class="form-group col-md-4">
 											<label>Chọn tháng</label>
@@ -53,7 +53,7 @@
 						</div>
 					</div>
 				</div>
-				<h1>Top sản phẩm tháng <strong><%=month%></strong></h1>
+				<h1>Top gian hàng tháng <strong><%=month%></strong></h1>
 				<div class="row">
 					<div class="col-xl-12 col-lg-12">
 						<div class="card">
@@ -113,7 +113,7 @@
 																			<table class="table table-bordered mb-0">
 																				<thead>
 																					<tr>
-																						<th>Sản phẩm</th>
+																						<th>gian hàng</th>
 																						<th>Số lượng</th>
 																					</tr>
 																				</thead>
@@ -173,7 +173,7 @@
 		function drawMonthReport() {
 			// Create the data table.    
 			var data = google.visualization.arrayToDataTable([
-				['Top sẩn phẩm theo tháng', 'Số lượng'],
+				['Top gian hàng theo tháng', 'Số lượng'],
 				<% for(var i=0; i< TopProduct.length; i++){ %>
 					<%if(i==10) break;%>
 					['<%=TopProduct[i].create%>',<%=TopProduct[i].total%>],
@@ -181,7 +181,7 @@
 			]);
 			// Set chart options
 			var options = {
-				title: "Top 10 sản phẩm Tháng",
+				title: "Top 10 gian hàng Tháng",
 				is3D: true,
 				pieSliceText: 'label',
 				tooltip: { showColorCode: true },
