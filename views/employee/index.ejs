@@ -10,13 +10,12 @@
             -webkit-appearance: none;
             margin: 0;
         }
-    </style>
+             </style>
 </head>
 
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns"
     class="vertical-layout vertical-menu 2-columns   menu-expanded fixed-navbar">
-    <nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-light bg-gradient-x-grey-blue">
-        <%  include ./../emlements/defaultHeader %>
+    <nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-light bg-gradient-x-grey-blue"><%  include ./../emlements/defaultHeader %>
     </nav>
     <%  include ./../emlements/defaultMenu %>
     <div class="app-content content container-fluid">
@@ -199,7 +198,7 @@
                                             <tbody>
                                                 <% for(var i=0; i< employees.length; i++){ %>
                                                 <tr>
-                                                    <td><%= employees[i].id %></td>
+                            <td><%= employees[i].id %></td>
                                                     <td><%= employees[i].name %></td>
                                                     <td><%= employees[i].account %></td>
                                                     <td><%= employees[i].phoneNumber %></td>

@@ -56,6 +56,12 @@ router.changeStatus = (req, res, next) => {
     }
     let sql = 'UPDATE categories SET status='+r+' WHERE id='+id;
     con.query(sql);
+    if(x==1)
+    {
+      sql = 'UPDATE products SET status='+r+' WHERE id_category='+id;
+      con.query(sql);
+    }
+
     res.redirect('/gian-hang');
     
   });
